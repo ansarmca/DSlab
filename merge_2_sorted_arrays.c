@@ -1,7 +1,3 @@
-/*
- * C Program to merge two sorted arrays using for loop
- */
- 
 #include <stdio.h>
 #include <stdlib.h>
  
