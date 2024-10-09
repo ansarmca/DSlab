@@ -12,6 +12,7 @@ int main(void)
     {
         scanf("%d", &arr1[i]);
     }
+ 
     printf("Enter the size of the second array: ");
     scanf("%d", &k);
     int arr2[k];
@@ -20,6 +21,7 @@ int main(void)
     {
         scanf("%d", &arr2[j]);
     }
+ 
     int arr3[n + k];
     i = j = 0;
     int in;
@@ -49,6 +51,7 @@ int main(void)
             j++;
         }
     }
+ 
     printf("The merged array is: \n");
     for (in = 0; in < n + k; in++)
     {
