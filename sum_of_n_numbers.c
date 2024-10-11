@@ -12,6 +12,6 @@ int main()
      i++;
   }
   
-  printf("Sum of N Numbers = %d \n ", Sum);
+  printf("Sum of %d numbers = %d \n",n, Sum);
   return 0;
 }
