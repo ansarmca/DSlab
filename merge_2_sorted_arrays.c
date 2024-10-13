@@ -35,7 +35,7 @@ int main(void)
         arr3[n + j] = arr2[j];
     }
 
-    // Sorting the merged array using simple bubble sort
+    // Sorting the merged array
     int total_size = n + k;
     for (i = 0; i < total_size - 1; i++)
     {
