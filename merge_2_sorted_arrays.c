@@ -2,7 +2,7 @@
 
 int main(void)
 {
-    int i, n, j, k;
+    int i, n, j, k, max = 0;
 
     // Input for the first array
     printf("Enter the size of the first array: ");
@@ -12,29 +12,10 @@ int main(void)
     for (i = 0; i < n; i++)
     {
         scanf("%d", &arr1[i]);
-    }
-
-    // Sorting the first array
-    for (i = 0; i < n - 1; i++)
-    {
-        for (j = 0; j < n - i - 1; j++)
-        {
-            if (arr1[j] > arr1[j + 1])
-            {
-                int temp = arr1[j];
-                arr1[j] = arr1[j + 1];
-                arr1[j + 1] = temp;
-            }
+        if (arr1[i] > max) {
+            max = arr1[i];  // Find the maximum element for counting sort
         }
     }
-
-    // Printing the first sorted array
-    printf("The first sorted array is: \n");
-    for (i = 0; i < n; i++)
-    {
-        printf("%d ", arr1[i]);
-    }
-    printf("\n");
 
     // Input for the second array
     printf("Enter the size of the second array: ");
@@ -44,61 +25,67 @@ int main(void)
     for (j = 0; j < k; j++)
     {
         scanf("%d", &arr2[j]);
-    }
-
-    // Sorting the second array
-    for (i = 0; i < k - 1; i++)
-    {
-        for (j = 0; j < k - i - 1; j++)
-        {
-            if (arr2[j] > arr2[j + 1])
-            {
-                int temp = arr2[j];
-                arr2[j] = arr2[j + 1];
-                arr2[j + 1] = temp;
-            }
+        if (arr2[j] > max) {
+            max = arr2[j];  // Update max if needed
         }
     }
 
-    // Printing the second sorted array
-    printf("The second sorted array is: \n");
-    for (i = 0; i < k; i++)
-    {
-        printf("%d ", arr2[i]);
+    // Sorting the first array using Counting Sort
+    int count1[max + 1];  // Array to store count of each element (0 to max)
+    for (i = 0; i <= max; i++) {
+        count1[i] = 0;  // Initialize count array with 0
+    }
+    for (i = 0; i < n; i++) {
+        count1[arr1[i]]++;  // Count each element in arr1
+    }
+
+    printf("The first sorted array is: \n");
+    for (i = 0; i <= max; i++) {
+        while (count1[i]--) {  // Print sorted arr1
+            printf("%d ", i);
+        }
     }
     printf("\n");
 
-    // Merging the two arrays into arr3
-    int arr3[n + k];
-    for (i = 0; i < n; i++)
-    {
-        arr3[i] = arr1[i];
+    // Sorting the second array using Counting Sort
+    int count2[max + 1];  // Array to store count for the second array
+    for (i = 0; i <= max; i++) {
+        count2[i] = 0;  // Initialize count array with 0
     }
-    for (j = 0; j < k; j++)
-    {
-        arr3[n + j] = arr2[j];
+    for (i = 0; i < k; i++) {
+        count2[arr2[i]]++;  // Count each element in arr2
     }
 
-    // Sorting the merged array
-    int total_size = n + k;
-    for (i = 0; i < total_size - 1; i++)
-    {
-        for (j = 0; j < total_size - i - 1; j++)
-        {
-            if (arr3[j] > arr3[j + 1])
-            {
-                int temp = arr3[j];
-                arr3[j] = arr3[j + 1];
-                arr3[j + 1] = temp;
-            }
+    printf("The second sorted array is: \n");
+    for (i = 0; i <= max; i++) {
+        while (count2[i]--) {  // Print sorted arr2
+            printf("%d ", i);
         }
     }
+    printf("\n");
 
-    // Printing the merged sorted array
+    // Merging the two arrays and sorting the merged array using Counting Sort
+    int arr3[n + k];  // Merged array
+    for (i = 0; i < n; i++) {
+        arr3[i] = arr1[i];  // Copy arr1 into arr3
+    }
+    for (j = 0; j < k; j++) {
+        arr3[n + j] = arr2[j];  // Copy arr2 into arr3
+    }
+
+    int count3[max + 1];  // Array to count the merged array elements
+    for (i = 0; i <= max; i++) {
+        count3[i] = 0;  // Initialize count array with 0
+    }
+    for (i = 0; i < n + k; i++) {
+        count3[arr3[i]]++;  // Count elements in arr3
+    }
+
     printf("The merged sorted array is: \n");
-    for (i = 0; i < total_size; i++)
-    {
-        printf("%d ", arr3[i]);
+    for (i = 0; i <= max; i++) {
+        while (count3[i]--) {  // Print sorted merged array
+            printf("%d ", i);
+        }
     }
     printf("\n");
 
