@@ -14,7 +14,7 @@ int main()
         scanf("%d", &arr1[i]);
     }
 
-    printf("First Array Before Sorting : \n");
+    printf("First Unsorted Array  : \n");
     for (i = 0; i < n; i++)
     {
         printf("%d ", arr1[i]);
@@ -55,7 +55,7 @@ int main()
         scanf("%d", &arr2[j]);
     }
 
-    printf("Second Array Before Sorting : \n");
+    printf("Second Unsorted Array : \n");
     for (i = 0; i < k; i++)
     {
         printf("%d ", arr2[i]);
