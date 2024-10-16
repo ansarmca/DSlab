@@ -1,5 +1,37 @@
 #include <stdio.h>
 
+// Function to sort an array using bubble sort
+void sortArray(int arr[], int size)
+{
+    int i, j;
+    for (i = 0; i < size - 1; i++)
+    {
+        for (j = 0; j < size - i - 1; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// Function to merge two arrays
+void mergeArrays(int arr1[], int size1, int arr2[], int size2, int arr3[])
+{
+    int i;
+    for (i = 0; i < size1; i++)
+    {
+        arr3[i] = arr1[i];
+    }
+    for (i = 0; i < size2; i++)
+    {
+        arr3[size1 + i] = arr2[i];
+    }
+}
+
 int main()
 {
     int i, n, j, k;
@@ -20,21 +52,9 @@ int main()
         printf("%d ", arr1[i]);
     }
     printf("\n");
-    
 
     // Sorting the first array
-    for (i = 0; i < n - 1; i++)
-    {
-        for (j = 0; j < n - i - 1; j++)
-        {
-            if (arr1[j] > arr1[j + 1])
-            {
-                int temp = arr1[j];
-                arr1[j] = arr1[j + 1];
-                arr1[j + 1] = temp;
-            }
-        }
-    }
+    sortArray(arr1, n);
 
     // Printing the first sorted array
     printf("The first sorted array is: \n");
@@ -43,7 +63,6 @@ int main()
         printf("%d ", arr1[i]);
     }
     printf("\n");
-    
 
     // Input for the second array
     printf("Enter the size of the second array: ");
@@ -62,21 +81,8 @@ int main()
     }
     printf("\n");
 
-    
-
     // Sorting the second array
-    for (i = 0; i < k - 1; i++)
-    {
-        for (j = 0; j < k - i - 1; j++)
-        {
-            if (arr2[j] > arr2[j + 1])
-            {
-                int temp = arr2[j];
-                arr2[j] = arr2[j + 1];
-                arr2[j + 1] = temp;
-            }
-        }
-    }
+    sortArray(arr2, k);
 
     // Printing the second sorted array
     printf("The second sorted array is: \n");
@@ -88,33 +94,14 @@ int main()
 
     // Merging the two arrays into arr3
     int arr3[n + k];
-    for (i = 0; i < n; i++)
-    {
-        arr3[i] = arr1[i];
-    }
-    for (j = 0; j < k; j++)
-    {
-        arr3[n + j] = arr2[j];
-    }
+    mergeArrays(arr1, n, arr2, k, arr3);
 
     // Sorting the merged array
-    int total_size = n + k;
-    for (i = 0; i < total_size - 1; i++)
-    {
-        for (j = 0; j < total_size - i - 1; j++)
-        {
-            if (arr3[j] > arr3[j + 1])
-            {
-                int temp = arr3[j];
-                arr3[j] = arr3[j + 1];
-                arr3[j + 1] = temp;
-            }
-        }
-    }
+    sortArray(arr3, n + k);
 
     // Printing the merged sorted array
     printf("The merged sorted array is: \n");
-    for (i = 0; i < total_size; i++)
+    for (i = 0; i < n + k; i++)
     {
         printf("%d ", arr3[i]);
     }
