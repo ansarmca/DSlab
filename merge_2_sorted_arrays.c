@@ -13,6 +13,13 @@ int main(void)
     {
         scanf("%d", &arr1[i]);
     }
+
+    printf("Before first sorted array is: \n");
+    for (i = 0; i < n; i++)
+    {
+        printf("%d ", arr1[i]);
+    }
+    printf("\n");
     
 
     // Sorting the first array
@@ -46,6 +53,15 @@ int main(void)
     {
         scanf("%d", &arr2[j]);
     }
+
+    printf("Before second sorted array is: \n");
+    for (i = 0; i < k; i++)
+    {
+        printf("%d ", arr2[i]);
+    }
+    printf("\n");
+
+    
 
     // Sorting the second array
     for (i = 0; i < k - 1; i++)
