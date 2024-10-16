@@ -14,6 +14,28 @@ int main(void)
         scanf("%d", &arr1[i]);
     }
 
+    // Sorting the first array
+    for (i = 0; i < n - 1; i++)
+    {
+        for (j = 0; j < n - i - 1; j++)
+        {
+            if (arr1[j] > arr1[j + 1])
+            {
+                int temp = arr1[j];
+                arr1[j] = arr1[j + 1];
+                arr1[j + 1] = temp;
+            }
+        }
+    }
+
+    // Printing the first sorted array
+    printf("The first sorted array is: \n");
+    for (i = 0; i < n; i++)
+    {
+        printf("%d ", arr1[i]);
+    }
+    printf("\n");
+
     // Input for the second array
     printf("Enter the size of the second array: ");
     scanf("%d", &k);
@@ -23,6 +45,28 @@ int main(void)
     {
         scanf("%d", &arr2[j]);
     }
+
+    // Sorting the second array
+    for (i = 0; i < k - 1; i++)
+    {
+        for (j = 0; j < k - i - 1; j++)
+        {
+            if (arr2[j] > arr2[j + 1])
+            {
+                int temp = arr2[j];
+                arr2[j] = arr2[j + 1];
+                arr2[j + 1] = temp;
+            }
+        }
+    }
+
+    // Printing the second sorted array
+    printf("The second sorted array is: \n");
+    for (i = 0; i < k; i++)
+    {
+        printf("%d ", arr2[i]);
+    }
+    printf("\n");
 
     // Merging the two arrays into arr3
     int arr3[n + k];
@@ -43,7 +87,6 @@ int main(void)
         {
             if (arr3[j] > arr3[j + 1])
             {
-                // Swap the elements
                 int temp = arr3[j];
                 arr3[j] = arr3[j + 1];
                 arr3[j + 1] = temp;
