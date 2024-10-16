@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// Function to sort an array using bubble sort
+// Function to sort an array 
 void sortArray(int arr[], int size)
 {
     int i, j;
@@ -63,6 +63,7 @@ int main()
         printf("%d ", arr1[i]);
     }
     printf("\n");
+    
 
     // Input for the second array
     printf("Enter the size of the second array: ");
