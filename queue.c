@@ -1,20 +1,19 @@
 #include <stdio.h>
+
 #define SIZE 5
 
 int queue[SIZE];
 int front = -1, rear = -1;
 
-// Function to check if the queue is full
 int isFull() {
     return (rear == SIZE - 1);
 }
 
-// Function to check if the queue is empty
 int isEmpty() {
     return (front == -1 || front > rear);
 }
 
-// Function to enqueue (add element) to the queue
+// Function to enqueue to the queue
 void enqueue(int value) {
     if (isFull()) {
         printf("Queue is full! Cannot enqueue %d.\n", value);
@@ -28,7 +27,7 @@ void enqueue(int value) {
     }
 }
 
-// Function to dequeue (remove element) from the queue
+// Function to dequeue from the queue
 int dequeue() {
     if (isEmpty()) {
         printf("Queue is empty! Cannot dequeue.\n");
@@ -36,7 +35,7 @@ int dequeue() {
     } else {
         int value = queue[front];
         front++;
-        if (front > rear) { // Reset the queue when all elements are dequeued
+        if (front > rear) { 
             front = rear = -1;
         }
         printf("%d dequeued from queue.\n", value);
@@ -44,7 +43,7 @@ int dequeue() {
     }
 }
 
-// Function to traverse (display) the queue
+// Function to traverse the queue
 void traverse() {
     if (isEmpty()) {
         printf("Queue is empty!\n");
@@ -57,7 +56,7 @@ void traverse() {
     }
 }
 
-// Main function to demonstrate enqueue, dequeue, and traversal
+
 int main() {
     int choice, value;
 
