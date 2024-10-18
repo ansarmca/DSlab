@@ -97,6 +97,13 @@ int main()
     int arr3[n + k];
     mergeArrays(arr1, n, arr2, k, arr3);
 
+    printf("The merged unsorted array is: \n");
+    for (i = 0; i < n + k; i++)
+    {
+        printf("%d ", arr3[i]);
+    }
+    printf("\n");
+
     // Sorting the merged array
     sortArray(arr3, n + k);
 
