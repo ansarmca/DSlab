@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// Function to sort an array using Bubble Sort
+// Function to sort an array 
 void sortArray(int arr[], int size) {
     int i, j;
     for (i = 0; i < size - 1; i++) {
@@ -14,7 +14,7 @@ void sortArray(int arr[], int size) {
     }
 }
 
-// Function to merge two arrays into one
+// Function to merge two arrays 
 void mergeArrays(int arr1[], int size1, int arr2[], int size2, int arr3[]) {
     int i;
     for (i = 0; i < size1; i++) {
@@ -28,7 +28,6 @@ void mergeArrays(int arr1[], int size1, int arr2[], int size2, int arr3[]) {
 int main() {
     int i, n, k;
 
-    // Input for the first array
     printf("Enter the size of the first array: ");
     scanf("%d", &n);
     int arr1[n];
@@ -45,7 +44,7 @@ int main() {
     }
     printf("\n");
 
-    // Sort and display the first sorted array
+    // Display the first sorted array
     sortArray(arr1, n);
     printf("The first sorted array is: \n");
     for (i = 0; i < n; i++) {
@@ -53,7 +52,7 @@ int main() {
     }
     printf("\n");
 
-    // Input for the second array
+    
     printf("Enter the size of the second array: ");
     scanf("%d", &k);
     int arr2[k];
@@ -70,7 +69,7 @@ int main() {
     }
     printf("\n");
 
-    // Sort and display the second sorted array
+    // Display the second sorted array
     sortArray(arr2, k);
     printf("The second sorted array is: \n");
     for (i = 0; i < k; i++) {
@@ -78,7 +77,7 @@ int main() {
     }
     printf("\n");
 
-    // Merge the two sorted arrays into a new array
+    // Merge the two sorted arrays
     int arr3[n + k];
     mergeArrays(arr1, n, arr2, k, arr3);
 
@@ -89,7 +88,7 @@ int main() {
     }
     printf("\n");
 
-    // Sort the merged array and display it
+    // Sort the merged array 
     sortArray(arr3, n + k);
     printf("The merged sorted array is: \n");
     for (i = 0; i < n + k; i++) {
