@@ -45,7 +45,7 @@ int dequeue()
     return data;
 }
 
-void display()
+void traversal()
 {
     if (isEmpty()) {
         printf("Queue is empty\n");
@@ -65,10 +65,10 @@ int main()
     int choice, data;
 
     while (1) {
-        printf("\nCircular Queue Menu:\n");
+        printf("\nCircular Queue Operations:\n");
         printf("1. Enqueue\n");
         printf("2. Dequeue\n");
-        printf("3. Display Queue\n");
+        printf("3. Traversal Queue\n");
         printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -85,12 +85,12 @@ int main()
                     printf("Dequeued element: %d\n", data);
                 break;
             case 3:
-                display();
+                traversal();
                 break;
             case 4:
                 return 0;
             default:
-                printf("Invalid choice, please try again.\n");
+                printf("Invalid choice.\n");
         }
     }
 
