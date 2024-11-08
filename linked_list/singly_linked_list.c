@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// node structure
 struct Node {
     int data;
     struct Node *link;
