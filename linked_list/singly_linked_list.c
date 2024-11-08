@@ -48,10 +48,10 @@ void traversal() {
 }
 
 int main() {
-    insertAtFront(10);
-    insertAtFront(20);
+    insertAtFront(100);
+    insertAtFront(200);
+    insertAtFront(300);
 
-    printList();
     traversal();
 
     return 0;
