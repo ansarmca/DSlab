@@ -42,6 +42,29 @@ void insertAtEnd(int data) {
     }
 }
 
+void insertAtPosition(int data, int position) {
+    struct Node *newnode = createNode(data);
+
+    if (position == 1) {
+        newnode->link = header;
+        header = newnode;
+    } else {
+        struct Node *current = header;
+        int i;
+        for (i = 1; i < position - 1 && current != NULL; i++) {
+            current = current->link;
+        }
+        
+        if (current == NULL) {
+            printf("Position out of bounds. Inserting at the end.\n");
+            insertAtEnd(data);
+        } else {
+            newnode->link = current->link;
+            current->link = newnode;
+        }
+    }
+}
+
 void printList() {
     struct Node *current = header;
     while (current != NULL) {
@@ -68,6 +91,14 @@ int main() {
     insertAtEnd(400);
     insertAtEnd(500);
 
+    printf("List before insertion at any position:\n");
+    traversal();
+
+    insertAtPosition(250, 2);  // Insert 250 at position 2
+    insertAtPosition(450, 5);  // Insert 450 at position 5
+    insertAtPosition(600, 10); // Insert 600 at position 10 (out of bounds)
+
+    printf("List after insertion at specified positions:\n");
     traversal();
 
     return 0;
