@@ -18,14 +18,27 @@ struct Node *createNode(int data) {
 }
 
 void insertAtFront(int data) {
-    struct Node *newnode;
-    newnode = createNode(data);
+    struct Node *newnode = createNode(data);
 
     if (header == NULL) {
         header = newnode;
     } else {
         newnode->link = header;
         header = newnode;
+    }
+}
+
+void insertAtEnd(int data) {
+    struct Node *newnode = createNode(data);
+
+    if (header == NULL) {
+        header = newnode;
+    } else {
+        struct Node *current = header;
+        while (current->link != NULL) {
+            current = current->link;
+        }
+        current->link = newnode;
     }
 }
 
@@ -51,6 +64,9 @@ int main() {
     insertAtFront(100);
     insertAtFront(200);
     insertAtFront(300);
+
+    insertAtEnd(400);
+    insertAtEnd(500);
 
     traversal();
 
