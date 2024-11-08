@@ -54,7 +54,6 @@ void insertAtAny(int data, int position) {
         for (i = 1; i < position - 1 && current != NULL; i++) {
             current = current->link;
         }
-        
         if (current == NULL) {
             printf("Position out of bounds. Inserting at the end.\n");
             insertAtEnd(data);
@@ -94,9 +93,13 @@ int main() {
     printf("List before insertion at any position:\n");
     traversal();
 
-    insertAtAny(80,2);
-    insertAtAny(700,5);
+    printf("Enter position: ");
+    scanf("%d",&position);
 
+    printf("Enter data: ");
+    scanf("%d",&data);
+    
+    insertAtAny(data,position);
 
  
     printf("List after insertion at specified positions:\n");
