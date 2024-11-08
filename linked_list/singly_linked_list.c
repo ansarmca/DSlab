@@ -64,15 +64,6 @@ void insertAtAny(int data, int position) {
     }
 }
 
-void printList() {
-    struct Node *current = header;
-    while (current != NULL) {
-        printf("%d ", current->data);
-        current = current->link;
-    }
-    printf("\n");
-}
-
 void traversal() {
     struct Node *ptr = header;
     while (ptr != NULL) {
@@ -83,6 +74,8 @@ void traversal() {
 }
 
 int main() {
+    int position, data;
+
     insertAtFront(100);
     insertAtFront(200);
     insertAtFront(300);
@@ -94,15 +87,14 @@ int main() {
     traversal();
 
     printf("Enter position: ");
-    scanf("%d",&position);
+    scanf("%d", &position);
 
     printf("Enter data: ");
-    scanf("%d",&data);
+    scanf("%d", &data);
     
-    insertAtAny(data,position);
+    insertAtAny(data, position);
 
- 
-    printf("List after insertion at specified positions:\n");
+    printf("List after insertion at specified position:\n");
     traversal();
 
     return 0;
