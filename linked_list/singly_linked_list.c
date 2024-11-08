@@ -38,14 +38,13 @@ void printList() {
     printf("\n");
 }
 
-void traversal(){
-
-struct Node *ptr;
-ptr = header;
-while(ptr=!NULL){
-printf("%d",ptr->data);
-ptr=ptr->link;
-}
+void traversal() {
+    struct Node *ptr = header;
+    while (ptr != NULL) {
+        printf("%d ", ptr->data);
+        ptr = ptr->link;
+    }
+    printf("\n");
 }
 
 int main() {
@@ -53,7 +52,7 @@ int main() {
     insertAtFront(20);
 
     printList();
-    traversal()
+    traversal();
 
     return 0;
 }
