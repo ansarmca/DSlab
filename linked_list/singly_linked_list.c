@@ -76,31 +76,22 @@ void traversal() {
 int main() {
     int position, data;
 
-    // Insert at front
-    printf("Enter data to insert at front: ");
-    scanf("%d", &data);
-    insertAtFront(data);
+    insertAtFront(100);
+    insertAtFront(200);
+    insertAtFront(300);
 
-    // Insert at end (first time)
-    printf("Enter data to insert at end: ");
-    scanf("%d", &data);
-    insertAtEnd(data);
-
-    // Insert at end (second time)
-    printf("Enter data to insert at end again: ");
-    scanf("%d", &data);
-    insertAtEnd(data);
+    insertAtEnd(400);
+    insertAtEnd(500);
 
     printf("List before insertion at any position:\n");
     traversal();
 
-    // Insert at a specified position
-    printf("Enter position to insert at: ");
+    printf("Enter the position to insert: ");
     scanf("%d", &position);
 
-    printf("Enter data to insert at position %d: ", position);
+    printf("Enter the data to insert: ");
     scanf("%d", &data);
-
+    
     insertAtAny(data, position);
 
     printf("List after insertion at specified position:\n");
