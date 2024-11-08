@@ -42,7 +42,7 @@ void insertAtEnd(int data) {
     }
 }
 
-void insertAtPosition(int data, int position) {
+void insertAtAny(int data, int position) {
     struct Node *newnode = createNode(data);
 
     if (position == 1) {
@@ -94,10 +94,11 @@ int main() {
     printf("List before insertion at any position:\n");
     traversal();
 
-    insertAtPosition(250, 2);  // Insert 250 at position 2
-    insertAtPosition(450, 5);  // Insert 450 at position 5
-    insertAtPosition(600, 10); // Insert 600 at position 10 (out of bounds)
+    insertAtAny(80,2);
+    insertAtAny(700,5);
 
+
+ 
     printf("List after insertion at specified positions:\n");
     traversal();
 
