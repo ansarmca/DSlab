@@ -61,6 +61,18 @@ void insertAtAny(int data, int position) {
     }
 }
 
+void deleteAtFront() {
+    if (header == NULL) {
+        printf("List is empty, nothing to delete.\n");
+        return;
+    }
+    
+    struct Node *temp = header;
+    header = header->link;
+    free(temp);
+    printf("Node deleted from the front.\n");
+}
+
 void traversal() {
     struct Node *ptr = header;
     while (ptr != NULL) {
@@ -78,8 +90,9 @@ int main() {
         printf("1. Insert at Front\n");
         printf("2. Insert at End\n");
         printf("3. Insert at Any Position\n");
-        printf("4. Display List\n");
-        printf("5. Exit\n");
+        printf("4. Delete at Front\n");
+        printf("5. Display List\n");
+        printf("6. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -100,16 +113,20 @@ int main() {
                 printf("Enter the position to insert: ");
                 scanf("%d", &position);
                 printf("Enter the data to insert: ");
-                scanf("%d", &data);                 
+                scanf("%d", &data);
                 insertAtAny(data, position);
                 break;
-                
+
             case 4:
+                deleteAtFront();
+                break;
+
+            case 5:
                 printf("Current List: ");
                 traversal();
                 break;
 
-            case 5:
+            case 6:
                 exit(0);
 
             default:
