@@ -71,13 +71,13 @@ void traversal() {
 }
 
 int main() {
-    int choice, data;
+    int choice, data, position;
 
     while (1) {
         printf("\nMenu:\n");
         printf("1. Insert at Front\n");
         printf("2. Insert at End\n");
-        printf("3. Insert at Any\n");
+        printf("3. Insert at Any Position\n");
         printf("4. Display List\n");
         printf("5. Exit\n");
         printf("Enter your choice: ");
@@ -97,18 +97,18 @@ int main() {
                 break;
 
             case 3:
-                printf("List before insertion at any position:\n");
                 printf("Enter the position to insert: ");
                 scanf("%d", &position);
                 printf("Enter the data to insert: ");
                 scanf("%d", &data);                 
-                printf("List after insertion at specified position:\n");
+                insertAtAny(data, position);
                 break;
                 
             case 4:
                 printf("Current List: ");
                 traversal();
                 break;
+
             case 5:
                 exit(0);
 
