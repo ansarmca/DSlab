@@ -18,7 +18,6 @@ struct Node *createNode(int data) {
 
 void insertAtFront(int data) {
     struct Node *newnode = createNode(data);
-
     if (header == NULL) {
         header = newnode;
     } else {
@@ -29,7 +28,6 @@ void insertAtFront(int data) {
 
 void insertAtEnd(int data) {
     struct Node *newnode = createNode(data);
-
     if (header == NULL) {
         header = newnode;
     } else {
@@ -38,28 +36,6 @@ void insertAtEnd(int data) {
             current = current->link;
         }
         current->link = newnode;
-    }
-}
-
-void insertAtAny(int data, int position) {
-    struct Node *newnode = createNode(data);
-
-    if (position == 1) {
-        newnode->link = header;
-        header = newnode;
-    } else {
-        struct Node *current = header;
-        int i;
-        for (i = 1; i < position - 1 && current != NULL; i++) {
-            current = current->link;
-        }
-        if (current == NULL) {
-            printf("Position out of bounds. Inserting at the end.\n");
-            insertAtEnd(data);
-        } else {
-            newnode->link = current->link;
-            current->link = newnode;
-        }
     }
 }
 
@@ -73,28 +49,34 @@ void traversal() {
 }
 
 int main() {
-    int position, data;
+    int choice, data;
 
-    insertAtFront(100);
-    insertAtFront(200);
-    insertAtFront(300);
+    while (1) {
+        printf("\nChoose an option:\n");
+        printf("1 - Insert at Front\n");
+        printf("2 - Insert at End\n");
+        printf("3 - Display List\n");
+        printf("4 - Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    insertAtEnd(400);
-    insertAtEnd(500);
-
-    printf("List before insertion at any position:\n");
-    traversal();
-
-    printf("Enter the position to insert: ");
-    scanf("%d", &position);
-
-    printf("Enter the data to insert: ");
-    scanf("%d", &data);
-    
-    insertAtAny(data, position);
-
-    printf("List after insertion at specified position:\n");
-    traversal();
+        if (choice == 1) {
+            printf("Enter data to insert at front: ");
+            scanf("%d", &data);
+            insertAtFront(data);
+        } else if (choice == 2) {
+            printf("Enter data to insert at end: ");
+            scanf("%d", &data);
+            insertAtEnd(data);
+        } else if (choice == 3) {
+            printf("Current List: ");
+            traversal();
+        } else if (choice == 4) {
+            break;
+        } else {
+            printf("Invalid choice. Please try again.\n");
+        }
+    }
 
     return 0;
 }
