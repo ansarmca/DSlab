@@ -73,6 +73,26 @@ void deleteAtFront() {
     printf("Node deleted from the front.\n");
 }
 
+void deleteAtEnd() {
+    if (header == NULL) {
+        printf("List is empty, nothing to delete.\n");
+        return;
+    }
+    
+    if (header->link == NULL) {
+        free(header);
+        header = NULL;
+    } else {
+        struct Node *current = header;
+        while (current->link->link != NULL) {
+            current = current->link;
+        }
+        free(current->link);
+        current->link = NULL;
+    }
+    printf("Node deleted from the end.\n");
+}
+
 void traversal() {
     struct Node *ptr = header;
     while (ptr != NULL) {
@@ -91,8 +111,9 @@ int main() {
         printf("2. Insert at End\n");
         printf("3. Insert at Any Position\n");
         printf("4. Delete at Front\n");
-        printf("5. Display List\n");
-        printf("6. Exit\n");
+        printf("5. Delete at End\n");
+        printf("6. Display List\n");
+        printf("7. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -122,11 +143,15 @@ int main() {
                 break;
 
             case 5:
+                deleteAtEnd();
+                break;
+
+            case 6:
                 printf("Current List: ");
                 traversal();
                 break;
 
-            case 6:
+            case 7:
                 exit(0);
 
             default:
