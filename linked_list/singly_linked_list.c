@@ -39,6 +39,28 @@ void insertAtEnd(int data) {
     }
 }
 
+void insertAtAny(int data, int position) {
+    struct Node *newnode = createNode(data);
+
+    if (position == 1) {
+        newnode->link = header;
+        header = newnode;
+    } else {
+        struct Node *current = header;
+        int i;
+        for (i = 1; i < position - 1 && current != NULL; i++) {
+            current = current->link;
+        }
+        if (current == NULL) {
+            printf("Position out of bounds. Inserting at the end.\n");
+            insertAtEnd(data);
+        } else {
+            newnode->link = current->link;
+            current->link = newnode;
+        }
+    }
+}
+
 void traversal() {
     struct Node *ptr = header;
     while (ptr != NULL) {
@@ -55,8 +77,9 @@ int main() {
         printf("\nMenu:\n");
         printf("1. Insert at Front\n");
         printf("2. Insert at End\n");
-        printf("3. Display List\n");
-        printf("4. Exit\n");
+        printf("3. Insert at Any\n");
+        printf("4. Display List\n");
+        printf("5. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -74,11 +97,19 @@ int main() {
                 break;
 
             case 3:
+                printf("List before insertion at any position:\n");
+                printf("Enter the position to insert: ");
+                scanf("%d", &position);
+                printf("Enter the data to insert: ");
+                scanf("%d", &data);                 
+                printf("List after insertion at specified position:\n");
+                break;
+                
+            case 4:
                 printf("Current List: ");
                 traversal();
                 break;
-
-            case 4:
+            case 5:
                 exit(0);
 
             default:
