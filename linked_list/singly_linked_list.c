@@ -52,29 +52,37 @@ int main() {
     int choice, data;
 
     while (1) {
-        printf("\nChoose an option:\n");
-        printf("1 - Insert at Front\n");
-        printf("2 - Insert at End\n");
-        printf("3 - Display List\n");
-        printf("4 - Exit\n");
+        printf("\nMenu:\n");
+        printf("1. Insert at Front\n");
+        printf("2. Insert at End\n");
+        printf("3. Display List\n");
+        printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
-        if (choice == 1) {
-            printf("Enter data to insert at front: ");
-            scanf("%d", &data);
-            insertAtFront(data);
-        } else if (choice == 2) {
-            printf("Enter data to insert at end: ");
-            scanf("%d", &data);
-            insertAtEnd(data);
-        } else if (choice == 3) {
-            printf("Current List: ");
-            traversal();
-        } else if (choice == 4) {
-            break;
-        } else {
-            printf("Invalid choice. Please try again.\n");
+        switch (choice) {
+            case 1:
+                printf("Enter data to insert at front: ");
+                scanf("%d", &data);
+                insertAtFront(data);
+                break;
+
+            case 2:
+                printf("Enter data to insert at end: ");
+                scanf("%d", &data);
+                insertAtEnd(data);
+                break;
+
+            case 3:
+                printf("Current List: ");
+                traversal();
+                break;
+
+            case 4:
+                exit(0);
+
+            default:
+                printf("Invalid choice. Please try again.\n");
         }
     }
 
