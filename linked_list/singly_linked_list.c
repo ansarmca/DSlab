@@ -41,7 +41,6 @@ void insertAtEnd(int data) {
 
 void insertAtAny(int data, int position) {
     struct Node *newnode = createNode(data);
-
     if (position == 1) {
         newnode->link = header;
         header = newnode;
@@ -66,7 +65,6 @@ void deleteAtFront() {
         printf("List is empty, nothing to delete.\n");
         return;
     }
-    
     struct Node *temp = header;
     printf("Node with value %d deleted from the front.\n", temp->data);
     header = header->link;
@@ -78,7 +76,6 @@ void deleteAtEnd() {
         printf("List is empty, nothing to delete.\n");
         return;
     }
-    
     if (header->link == NULL) {
         printf("Node with value %d deleted from the end.\n", header->data);
         free(header);
@@ -99,26 +96,17 @@ void deleteAtAny(int position) {
         printf("List is empty, nothing to delete.\n");
         return;
     }
-
-    if (position == 1) {
-        deleteAtFront();
-        return;
-    }
-
     struct Node *current = header;
     struct Node *prev = NULL;
     int i;
-
     for (i = 1; i < position && current != NULL; i++) {
         prev = current;
         current = current->link;
     }
-
     if (current == NULL) {
         printf("Position out of bounds. Nothing to delete.\n");
         return;
     }
-
     prev->link = current->link;
     printf("Node with value %d deleted at position %d.\n", current->data, position);
     free(current);
@@ -127,7 +115,6 @@ void deleteAtAny(int position) {
 void search(int key) {
     struct Node *current = header;
     int position = 1;
-
     while (current != NULL) {
         if (current->data == key) {
             printf("Value %d found at position %d.\n", key, position);
@@ -136,7 +123,6 @@ void search(int key) {
         current = current->link;
         position++;
     }
-
     printf("Value %d not found in the list.\n", key);
 }
 
@@ -154,16 +140,15 @@ int main() {
 
     while (1) {
         printf("\nMenu:\n");
-printf("1. Insert at Front\n");
-printf("2. Insert at End\n");
-printf("3. Insert at Any Position\n");
-printf("4. Delete at Front\n");
-printf("5. Delete at End\n");
-printf("6. Delete at Any Position\n");
-printf("7. Display List\n");
-printf("8. Exit\n");
-printf("9. Search in List\n");
-
+        printf("1. Insert at Front\n");
+        printf("2. Insert at End\n");
+        printf("3. Insert at Any Position\n");
+        printf("4. Delete at Front\n");
+        printf("5. Delete at End\n");
+        printf("6. Delete at Any Position\n");
+        printf("7. Search in List\n");
+        printf("8. Display List\n");
+        printf("9. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -202,20 +187,20 @@ printf("9. Search in List\n");
                 deleteAtAny(position);
                 break;
 
-            case 7:
+           case 7:
+                printf("Enter the value to search: ");
+                scanf("%d", &data);
+                search(data);
+                break;
+
+            case 8:
                 printf("Current List: ");
                 traversal();
                 break;
 
-            case 8:
-                exit(0);
             case 9:
-            printf("Enter the value to search: ");
-            scanf("%d", &data);
-            search(data);
-            break;
-
-
+                exit(0);
+                
             default:
                 printf("Invalid choice. Please try again.\n");
         }
