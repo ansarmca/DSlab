@@ -68,9 +68,9 @@ void deleteAtFront() {
     }
     
     struct Node *temp = header;
+    printf("Node with value %d deleted from the front.\n", temp->data);
     header = header->link;
     free(temp);
-    printf("Node deleted from the front.\n");
 }
 
 void deleteAtEnd() {
@@ -80,6 +80,7 @@ void deleteAtEnd() {
     }
     
     if (header->link == NULL) {
+        printf("Node with value %d deleted from the end.\n", header->data);
         free(header);
         header = NULL;
     } else {
@@ -87,10 +88,10 @@ void deleteAtEnd() {
         while (current->link->link != NULL) {
             current = current->link;
         }
+        printf("Node with value %d deleted from the end.\n", current->link->data);
         free(current->link);
         current->link = NULL;
     }
-    printf("Node deleted from the end.\n");
 }
 
 void deleteAtAny(int position) {
@@ -119,8 +120,8 @@ void deleteAtAny(int position) {
     }
 
     prev->link = current->link;
+    printf("Node with value %d deleted at position %d.\n", current->data, position);
     free(current);
-    printf("Node deleted at position %d.\n", position);
 }
 
 void traversal() {
