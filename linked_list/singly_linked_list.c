@@ -124,6 +124,22 @@ void deleteAtAny(int position) {
     free(current);
 }
 
+void search(int key) {
+    struct Node *current = header;
+    int position = 1;
+
+    while (current != NULL) {
+        if (current->data == key) {
+            printf("Value %d found at position %d.\n", key, position);
+            return;
+        }
+        current = current->link;
+        position++;
+    }
+
+    printf("Value %d not found in the list.\n", key);
+}
+
 void traversal() {
     struct Node *ptr = header;
     while (ptr != NULL) {
@@ -138,14 +154,16 @@ int main() {
 
     while (1) {
         printf("\nMenu:\n");
-        printf("1. Insert at Front\n");
-        printf("2. Insert at End\n");
-        printf("3. Insert at Any Position\n");
-        printf("4. Delete at Front\n");
-        printf("5. Delete at End\n");
-        printf("6. Delete at Any Position\n");
-        printf("7. Display List\n");
-        printf("8. Exit\n");
+printf("1. Insert at Front\n");
+printf("2. Insert at End\n");
+printf("3. Insert at Any Position\n");
+printf("4. Delete at Front\n");
+printf("5. Delete at End\n");
+printf("6. Delete at Any Position\n");
+printf("7. Display List\n");
+printf("8. Exit\n");
+printf("9. Search in List\n");
+
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -191,6 +209,12 @@ int main() {
 
             case 8:
                 exit(0);
+            case 9:
+            printf("Enter the value to search: ");
+            scanf("%d", &data);
+            search(data);
+            break;
+
 
             default:
                 printf("Invalid choice. Please try again.\n");
