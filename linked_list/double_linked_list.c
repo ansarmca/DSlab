@@ -36,7 +36,6 @@ void insertAtEnd(int data) {
         header = new_node;
     } else {
         struct Node *temp = header;
-        // Traverse to the last node
         while (temp->next != NULL) {
             temp = temp->next;
         }
@@ -46,7 +45,7 @@ void insertAtEnd(int data) {
     }
 }
 
-void printList() {
+void traversal() {
     struct Node *temp = header;
     while (temp != NULL) {
         printf("%d ", temp->data);
@@ -59,9 +58,8 @@ int main() {
     insertAtFront(10);
     insertAtFront(20);
     insertAtEnd(30);
-    insertAtEnd(40);
-
-    printList();
+    insertAtEnd(500);
+    traversal();
 
     return 0;
 }
