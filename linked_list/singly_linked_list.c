@@ -93,6 +93,25 @@ void deleteAtEnd() {
     free(temp);
 }
 
+void deleteAtAny(int position) {
+    if (header == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct Node* temp = header;
+    for (int i = 0; i < position - 1; i++) {
+        if (temp == NULL) {
+            printf("Invalid position\n");
+            return;
+        }
+        temp = temp->next;
+    }
+    struct Node* nodeToDelete = temp->next;
+    temp->next = nodeToDelete->next;
+    nodeToDelete->next->prev = temp;
+    free(nodeToDelete);
+}
+
 void traversal() {
     struct Node *temp = header;
     while (temp != NULL) {
@@ -107,7 +126,7 @@ int main() {
     int data, position;
 
     while (1) {
-        printf("\n1. Insert at Front\n2. Insert at End\n3. Insert at Any\n4. Delete at Front\n5. Delete at End\n6. Traverse\n7. Exit\n");
+        printf("\n1. Insert at Front\n2. Insert at End\n3. Insert at Any\n4. Delete at Front\n5. Delete at End\n6. Delete at Any\n7. Traverse\n8. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -136,9 +155,14 @@ int main() {
                 deleteAtEnd();
                 break;
             case 6:
+                printf("Enter position to delete: ");
+                scanf("%d", &position);
+                deleteAtAny(position);
+                break;
+            case 7:
                 traversal();
                 break;    
-            case 7:
+            case 8:
                 exit(0);
             default:
                 printf("Invalid choice\n");
