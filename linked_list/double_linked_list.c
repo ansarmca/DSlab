@@ -44,6 +44,38 @@ void insertAtEnd(int data) {
     }
 }
 
+void insertAtAny(int data, int position) {
+    struct Node *new_node = createNode(data);
+    struct Node *temp = header;
+    for (int i = 0; i < position - 1; i++) {
+        temp = temp->next;
+        if (temp == NULL) {
+            printf("Invalid position\n");
+            return;
+        }
+    }
+    new_node->next = temp->next;
+    new_node->prev = temp;
+    if (temp->next != NULL) {
+        temp->next->prev = new_node;
+    }
+    temp->next = new_node;
+}
+
+void deleteAtFront() {
+    if (header == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct Node* temp = header;
+    header = header->next;
+
+    if (header != NULL) {
+        header->prev = NULL;
+    }
+    free(temp);
+}
+
 void traversal() {
     struct Node *temp = header;
     while (temp != NULL) {
@@ -58,6 +90,10 @@ int main() {
     insertAtFront(20);
     insertAtEnd(30);
     insertAtEnd(500);
+    insertAtAny(800,2);
+    deleteAtFront();
+
+
     traversal();
 
     return 0;
