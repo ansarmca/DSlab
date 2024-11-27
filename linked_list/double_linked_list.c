@@ -86,15 +86,44 @@ void traversal() {
 }
 
 int main() {
-    insertAtFront(10);
-    insertAtFront(20);
-    insertAtEnd(30);
-    insertAtEnd(500);
-    insertAtAny(800,2);
-    deleteAtFront();
+    int choice;
+    int data, position;
 
+    while (1) {
+        printf("\n1. Insert at Front\n2. Insert at End\n3. Insert at Any\n4. Delete at Front\n5. Traverse\n6. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    traversal();
+        switch (choice) {
+            case 1:
+                printf("Enter data to insert: ");
+                scanf("%d", &data);
+                insertAtFront(data);
+                break;
+            case 2:
+                printf("Enter data to insert: ");
+                scanf("%d", &data);
+                insertAtEnd(data);
+                break;
+            case 3:
+                printf("Enter position: ");
+                scanf("%d", &position);
+                printf("Enter data to insert: ");
+                scanf("%d", &data);                
+                insertAtAny(data, position);
+                break;
+            case 4:
+                deleteAtFront();
+                break;
+            case 5:
+                traversal();
+                break;
+            case 6:
+                exit(0);
+            default:
+                printf("Invalid choice\n");
+        }
+    }
 
     return 0;
 }
