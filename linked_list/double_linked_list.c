@@ -3,16 +3,18 @@
 
 struct Node {
     int data;
-    struct Node *link;
+    struct Node *next;
+    struct Node *prev;
 };
 
 struct Node *header = NULL;
 
 struct Node *createNode(int data) {
     struct Node *newnode;
-    newnode = malloc(sizeof(struct Node));
+    newnode = (struct Node *)malloc(sizeof(struct Node));
     newnode->data = data;
-    newnode->link = NULL;
+    newnode->next = NULL;
+    newnode->prev = NULL;
     return newnode;
 }
 
@@ -27,10 +29,11 @@ void insertAtFront(int data) {
     if (header == NULL) {
         header = newnode;
     } else {
-        newnode->link = header;
+        newnode->next = header;
+        header->prev = newnode;
         header = newnode;
     }
-    printf("Node with value %d inserted at position 1.\n", data);
+    printf("Node with value %d inserted at the front.\n", data);
 }
 
 void insertAtEnd(int data) {
@@ -40,34 +43,35 @@ void insertAtEnd(int data) {
         printf("Node with value %d inserted at position 1.\n", data);
     } else {
         struct Node *current = header;
-        int position = 1;
-        while (current->link != NULL) {
-            current = current->link;
-            position++;
+        while (current->next != NULL) {
+            current = current->next;
         }
-        current->link = newnode;
-        printf("Node with value %d inserted at position %d.\n", data, position + 1);
+        current->next = newnode;
+        newnode->prev = current;
+        printf("Node with value %d inserted at the end.\n", data);
     }
 }
 
 void insertAtAny(int data, int position) {
     struct Node *newnode = createNode(data);
     if (position == 1) {
-        newnode->link = header;
-        header = newnode;
-        printf("Node with value %d inserted at position 1.\n", data);
+        insertAtFront(data);
     } else {
         struct Node *current = header;
         int i;
         for (i = 1; i < position - 1 && current != NULL; i++) {
-            current = current->link;
+            current = current->next;
         }
         if (current == NULL) {
             printf("Position out of bounds. Inserting at the end.\n");
             insertAtEnd(data);
         } else {
-            newnode->link = current->link;
-            current->link = newnode;
+            newnode->next = current->next;
+            if (current->next != NULL) {
+                current->next->prev = newnode;
+            }
+            current->next = newnode;
+            newnode->prev = current;
             printf("Node with value %d inserted at position %d.\n", data, position);
         }
     }
@@ -79,8 +83,11 @@ void deleteAtFront() {
         return;
     }
     struct Node *temp = header;
-    printf("Node with value %d deleted from position 1.\n", temp->data);
-    header = header->link;
+    printf("Node with value %d deleted from the front.\n", temp->data);
+    header = header->next;
+    if (header != NULL) {
+        header->prev = NULL;
+    }
     free(temp);
 }
 
@@ -89,27 +96,24 @@ void deleteAtEnd() {
         printf("List is empty, nothing to delete.\n");
         return;
     }
-    if (header->link == NULL) {
-        printf("Node with value %d deleted from position 1.\n", header->data);
+    struct Node *current = header;
+    if (current->next == NULL) {
+        printf("Node with value %d deleted from the end.\n", current->data);
         free(header);
         header = NULL;
-    } else {
-        struct Node *current = header;
-        int position = 1;
-        while (current->link->link != NULL) {
-            current = current->link;
-            position++;
-        }
-        printf("Node with value %d deleted from position %d.\n", current->link->data, position + 1);
-        free(current->link);
-        current->link = NULL;
+        return;
     }
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    printf("Node with value %d deleted from the end.\n", current->data);
+    current->prev->next = NULL;
+    free(current);
 }
 
 void deleteAtAny(int position) {
     if (header == NULL) {
         checkIfEmpty();
-        printf("List is empty, nothing to delete.\n");
         return;
     }
     if (position == 1) {
@@ -117,18 +121,21 @@ void deleteAtAny(int position) {
         return;
     }
     struct Node *current = header;
-    struct Node *prev = NULL;
     int i;
     for (i = 1; i < position && current != NULL; i++) {
-        prev = current;
-        current = current->link;
+        current = current->next;
     }
     if (current == NULL) {
         printf("Position out of bounds. Nothing to delete.\n");
         return;
     }
-    prev->link = current->link;
     printf("Node with value %d deleted from position %d.\n", current->data, position);
+    if (current->next != NULL) {
+        current->next->prev = current->prev;
+    }
+    if (current->prev != NULL) {
+        current->prev->next = current->next;
+    }
     free(current);
 }
 
@@ -139,19 +146,22 @@ int search(int key) {
         if (current->data == key) {
             return position;
         }
-        current = current->link;
+        current = current->next;
         position++;
     }
-    return -1; 
+    return -1;
 }
 
 void traversal() {
-    checkIfEmpty();
+    if (header == NULL) {
+        printf("The list is currently empty.\n");
+        return;
+    }
     struct Node *ptr = header;
     int position = 1;
     while (ptr != NULL) {
         printf("%d (%d) ", ptr->data, position);
-        ptr = ptr->link;
+        ptr = ptr->next;
         position++;
     }
     printf("\n");
