@@ -16,7 +16,14 @@ struct Node *createNode(int data) {
     return newnode;
 }
 
+void checkIfEmpty() {
+    if (header == NULL) {
+        printf("The list is currently empty.\n");
+    }
+}
+
 void insertAtFront(int data) {
+    checkIfEmpty();
     struct Node *newnode = createNode(data);
     if (header == NULL) {
         header = newnode;
@@ -28,6 +35,7 @@ void insertAtFront(int data) {
 }
 
 void insertAtEnd(int data) {
+    checkIfEmpty();
     struct Node *newnode = createNode(data);
     if (header == NULL) {
         header = newnode;
@@ -45,6 +53,7 @@ void insertAtEnd(int data) {
 }
 
 void insertAtAny(int data, int position) {
+    checkIfEmpty();
     struct Node *newnode = createNode(data);
     if (position == 1) {
         newnode->link = header;
@@ -69,6 +78,7 @@ void insertAtAny(int data, int position) {
 
 void deleteAtFront() {
     if (header == NULL) {
+        checkIfEmpty();
         printf("List is empty, nothing to delete.\n");
         return;
     }
@@ -76,10 +86,12 @@ void deleteAtFront() {
     printf("Node with value %d deleted from position 1.\n", temp->data);
     header = header->link;
     free(temp);
+    checkIfEmpty();
 }
 
 void deleteAtEnd() {
     if (header == NULL) {
+        checkIfEmpty();
         printf("List is empty, nothing to delete.\n");
         return;
     }
@@ -98,10 +110,12 @@ void deleteAtEnd() {
         free(current->link);
         current->link = NULL;
     }
+    checkIfEmpty();
 }
 
 void deleteAtAny(int position) {
     if (header == NULL) {
+        checkIfEmpty();
         printf("List is empty, nothing to delete.\n");
         return;
     }
@@ -123,6 +137,7 @@ void deleteAtAny(int position) {
     prev->link = current->link;
     printf("Node with value %d deleted from position %d.\n", current->data, position);
     free(current);
+    checkIfEmpty();
 }
 
 int search(int key) {
@@ -139,6 +154,7 @@ int search(int key) {
 }
 
 void traversal() {
+    checkIfEmpty();
     struct Node *ptr = header;
     int position = 1;
     while (ptr != NULL) {
@@ -226,5 +242,3 @@ int main() {
     }
     return 0;
 }
-
-           
