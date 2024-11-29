@@ -125,25 +125,24 @@ void deleteAtAny(int position) {
     free(current);
 }
 
-void search(int key) {
+int search(int key) {
     struct Node *current = header;
     int position = 1;
     while (current != NULL) {
         if (current->data == key) {
-            printf("Value %d found at position %d.\n", key, position);
-            return;
+            return position;
         }
         current = current->link;
         position++;
     }
-    printf("Value %d not found in the list.\n", key);
+    return -1; 
 }
 
 void traversal() {
     struct Node *ptr = header;
     int position = 1;
     while (ptr != NULL) {
-        printf("%d (Position %d) ", ptr->data, position);
+        printf("%d (%d) ", ptr->data, position);
         ptr = ptr->link;
         position++;
     }
@@ -211,7 +210,7 @@ int main() {
                 } else {
                     printf("Data found at position %d\n", position);
                 }
-                                break;
+                break;
 
             case 8:
                 printf("Current List: ");
