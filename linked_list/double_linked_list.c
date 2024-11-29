@@ -23,7 +23,6 @@ void checkIfEmpty() {
 }
 
 void insertAtFront(int data) {
-    checkIfEmpty();
     struct Node *newnode = createNode(data);
     if (header == NULL) {
         header = newnode;
@@ -35,7 +34,6 @@ void insertAtFront(int data) {
 }
 
 void insertAtEnd(int data) {
-    checkIfEmpty();
     struct Node *newnode = createNode(data);
     if (header == NULL) {
         header = newnode;
@@ -53,7 +51,6 @@ void insertAtEnd(int data) {
 }
 
 void insertAtAny(int data, int position) {
-    checkIfEmpty();
     struct Node *newnode = createNode(data);
     if (position == 1) {
         newnode->link = header;
@@ -78,7 +75,6 @@ void insertAtAny(int data, int position) {
 
 void deleteAtFront() {
     if (header == NULL) {
-        checkIfEmpty();
         printf("List is empty, nothing to delete.\n");
         return;
     }
@@ -86,12 +82,10 @@ void deleteAtFront() {
     printf("Node with value %d deleted from position 1.\n", temp->data);
     header = header->link;
     free(temp);
-    checkIfEmpty();
 }
 
 void deleteAtEnd() {
     if (header == NULL) {
-        checkIfEmpty();
         printf("List is empty, nothing to delete.\n");
         return;
     }
@@ -110,7 +104,6 @@ void deleteAtEnd() {
         free(current->link);
         current->link = NULL;
     }
-    checkIfEmpty();
 }
 
 void deleteAtAny(int position) {
@@ -137,7 +130,6 @@ void deleteAtAny(int position) {
     prev->link = current->link;
     printf("Node with value %d deleted from position %d.\n", current->data, position);
     free(current);
-    checkIfEmpty();
 }
 
 int search(int key) {
@@ -188,13 +180,11 @@ int main() {
                 scanf("%d", &data);
                 insertAtFront(data);
                 break;
-
             case 2:
                 printf("Enter data to insert at end: ");
                 scanf("%d", &data);
                 insertAtEnd(data);
                 break;
-
             case 3:
                 printf("Enter the position to insert: ");
                 scanf("%d", &position);
@@ -202,21 +192,17 @@ int main() {
                 scanf("%d", &data);
                 insertAtAny(data, position);
                 break;
-
             case 4:
                 deleteAtFront();
                 break;
-
             case 5:
                 deleteAtEnd();
                 break;
-
             case 6:
                 printf("Enter the position to delete: ");
                 scanf("%d", &position);
                 deleteAtAny(position);
                 break;
-
             case 7:
                 printf("Enter data to search: ");
                 scanf("%d", &data);
@@ -227,15 +213,12 @@ int main() {
                     printf("Data found at position %d\n", position);
                 }
                 break;
-
             case 8:
                 printf("Current List: ");
                 traversal();
                 break;
-
             case 9:
                 exit(0);
-
             default:
                 printf("Invalid choice. Please try again.\n");
         }
