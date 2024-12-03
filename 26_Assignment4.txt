@@ -69,27 +69,54 @@ void insertAtEnd(int data) {
     }
 }
 
-void insertAtAny(int data, int position) {
+void insertAtAny_secondMethod(int data, int key) {
     struct Node *newnode = createNode(data);
-    if (position == 1) {
-        insertAtFront(data);
+    struct Node *ptr = header;
+    if (header == NULL) {
+        header = newnode;
     } else {
-        struct Node *current = header;
-        int i;
-        for (i = 1; i < position - 1 && current != NULL; i++) {
-            current = current->next;
+        while (ptr != NULL && ptr->data != key) {
+            ptr = ptr->next;
         }
-        if (current == NULL) {
-            printf("Position out of bounds. Inserting at the end.\n");
-            insertAtEnd(data);
+        if (ptr == NULL) {
+            printf("Key not found in the list \n");
+            free(newnode);
+            return;
+        }
+        newnode->next = ptr->next;
+        ptr->next = newnode;
+        newnode->prev = ptr;
+
+        if (newnode->next != NULL) {
+            newnode->next->prev = newnode;
+        }
+    }
+}
+
+void insertAtAny(int data, int pos) {
+    struct Node *newnode = createNode(data);
+    struct Node *ptr = header, *prev;
+    int currentPos = 1;
+    if (pos == 1) {
+        newnode->next = header;
+        header = newnode;
+    } else if (pos == 0) {
+        printf("Node Starts at 1\n");
+    } else {
+        while (ptr != NULL && currentPos < pos) {
+            prev = ptr;
+            ptr = ptr->next;
+            currentPos++;
+        }
+        if (currentPos == pos) {
+            newnode->prev = prev;
+            newnode->next = ptr;
+            prev->next = newnode;
+            if (ptr != NULL)
+                ptr->prev = newnode;
         } else {
-            newnode->next = current->next;
-            if (current->next != NULL) {
-                current->next->prev = newnode;
-            }
-            current->next = newnode;
-            newnode->prev = current;
-            printf("Node with value %d inserted at position %d.\n", data, position);
+            printf("Position not found\n");
+            free(newnode);
         }
     }
 }
@@ -185,7 +212,7 @@ void traversal() {
 }
 
 int main() {
-    int choice, data, position;
+    int choice, data, position, key;
 
     while (1) {
         printf("\nMenu:\n");
@@ -213,11 +240,11 @@ int main() {
                 insertAtEnd(data);
                 break;
             case 3:
-                printf("Enter the position to insert: ");
-                scanf("%d", &position);
-                printf("Enter the data to insert: ");
+                printf("Enter key to insert after: ");
+                scanf("%d", &key);
+                printf("Enter data: ");
                 scanf("%d", &data);
-                insertAtAny(data, position);
+                insertAtAny_secondMethod(data, key);
                 break;
             case 4:
                 deleteAtFront();
