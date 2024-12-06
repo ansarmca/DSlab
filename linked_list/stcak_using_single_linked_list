@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define the Node structure
 struct Node {
     int data;
     struct Node* next;
 };
 
-// Push operation to add an element to the stack
 void push(struct Node** top, int value) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     if (!newNode) {
@@ -20,7 +18,6 @@ void push(struct Node** top, int value) {
     printf("%d pushed to stack\n", value);
 }
 
-// Pop operation to remove an element from the stack
 int pop(struct Node** top) {
     if (*top == NULL) {
         printf("Stack underflow\n");
@@ -33,7 +30,6 @@ int pop(struct Node** top) {
     return popped;
 }
 
-// Peek operation to return the top element of the stack
 int peek(struct Node* top) {
     if (top == NULL) {
         printf("Stack is empty\n");
@@ -42,7 +38,6 @@ int peek(struct Node* top) {
     return top->data;
 }
 
-// Display the elements of the stack
 void display(struct Node* top) {
     if (top == NULL) {
         printf("Stack is empty\n");
@@ -58,7 +53,7 @@ void display(struct Node* top) {
 }
 
 int main() {
-    struct Node* top = NULL; // Initialize an empty stack
+    struct Node* top = NULL;
     int choice, value;
 
     printf("Stack Operations using Linked List:\n");
@@ -72,22 +67,22 @@ int main() {
             case 1:
                 printf("Enter value to push: ");
                 scanf("%d", &value);
-                push(&top, value); // Use 'top' instead of 'stack'
+                push(&top, value); 
                 break;
             case 2:
-                value = pop(&top); // Use 'top' instead of 'stack'
+                value = pop(&top); 
                 if (value != -1) {
                     printf("Popped value: %d\n", value);
                 }
                 break;
             case 3:
-                value = peek(top); // Use 'top' instead of 'stack'
+                value = peek(top);
                 if (value != -1) {
                     printf("Top element: %d\n", value);
                 }
                 break;
             case 4:
-                display(top); // Use 'top' instead of 'stack'
+                display(top); 
                 break;
             case 5:
                 printf("Exiting...\n");
