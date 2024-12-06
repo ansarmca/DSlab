@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define a node structure
-typedef struct Node {
+struct Node {
     int data;
     struct Node* next;
-} Node;
+};
 
-// Push operation to add an element to the stack
 void push(Node** top, int value) {
     Node* newNode = (Node*)malloc(sizeof(Node));
     if (!newNode) {
@@ -20,7 +18,6 @@ void push(Node** top, int value) {
     printf("%d pushed to stack\n", value);
 }
 
-// Pop operation to remove an element from the stack
 int pop(Node** top) {
     if (*top == NULL) {
         printf("Stack underflow\n");
@@ -33,7 +30,6 @@ int pop(Node** top) {
     return popped;
 }
 
-// Peek operation to return the top element of the stack
 int peek(Node* top) {
     if (top == NULL) {
         printf("Stack is empty\n");
@@ -42,7 +38,6 @@ int peek(Node* top) {
     return top->data;
 }
 
-// Display the elements of the stack
 void display(Node* top) {
     if (top == NULL) {
         printf("Stack is empty\n");
@@ -58,7 +53,7 @@ void display(Node* top) {
 }
 
 int main() {
-    Node* stack = NULL; // Initialize an empty stack
+    struct Node* top = NULL;
     int choice, value;
 
     printf("Stack Operations using Linked List:\n");
