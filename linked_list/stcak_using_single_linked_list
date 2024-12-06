@@ -1,12 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Define the Node structure
 struct Node {
     int data;
     struct Node* next;
 };
 
-void push(struct Node** top, int value) {
+// Push operation to add an element to the stack
+void push(struct Node** top, int value, int* size) {
+    if (*size >= 5) {
+        printf("Stack is full\n");
+        return;
+    }
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     if (!newNode) {
         printf("Heap overflow\n");
@@ -15,10 +21,12 @@ void push(struct Node** top, int value) {
     newNode->data = value;
     newNode->next = *top;
     *top = newNode;
+    (*size)++;
     printf("%d pushed to stack\n", value);
 }
 
-int pop(struct Node** top) {
+// Pop operation to remove an element from the stack
+int pop(struct Node** top, int* size) {
     if (*top == NULL) {
         printf("Stack underflow\n");
         return -1;
@@ -27,9 +35,11 @@ int pop(struct Node** top) {
     *top = (*top)->next;
     int popped = temp->data;
     free(temp);
+    (*size)--;
     return popped;
 }
 
+// Peek operation to return the top element of the stack
 int peek(struct Node* top) {
     if (top == NULL) {
         printf("Stack is empty\n");
@@ -38,6 +48,7 @@ int peek(struct Node* top) {
     return top->data;
 }
 
+// Display the elements of the stack
 void display(struct Node* top) {
     if (top == NULL) {
         printf("Stack is empty\n");
@@ -53,10 +64,11 @@ void display(struct Node* top) {
 }
 
 int main() {
-    struct Node* top = NULL;
+    struct Node* top = NULL; // Initialize an empty stack
     int choice, value;
+    int size = 0; // Keep track of the current stack size
 
-    printf("Stack Operations using Linked List:\n");
+    printf("Stack Operations using Linked List (Size limit: 5):\n");
     printf("1. Push\n2. Pop\n3. Peek\n4. Display\n5. Exit\n");
 
     while (1) {
@@ -67,10 +79,10 @@ int main() {
             case 1:
                 printf("Enter value to push: ");
                 scanf("%d", &value);
-                push(&top, value); 
+                push(&top, value, &size);
                 break;
             case 2:
-                value = pop(&top); 
+                value = pop(&top, &size);
                 if (value != -1) {
                     printf("Popped value: %d\n", value);
                 }
@@ -82,7 +94,7 @@ int main() {
                 }
                 break;
             case 4:
-                display(top); 
+                display(top);
                 break;
             case 5:
                 printf("Exiting...\n");
