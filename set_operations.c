@@ -1,94 +1,100 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
-#define CHAR_SET_SIZE 26
+#define SIZE 26 // Size of the universal set (alphabet)
 
-// Set the bit corresponding to the character
-void set_bit(char *bit_vector, char c) {
-    if (c >= 'a' && c <= 'z') {
-        bit_vector[c - 'a'] = 1;
+// Function to initialize a set with 0 (false)
+void initializeSet(bool set[]) {
+    for (int i = 0; i < SIZE; i++) {
+        set[i] = false;
     }
 }
 
-// Perform the union of two sets
-void union_sets(const char *set1, const char *set2, char *result) {
-    for (int i = 0; i < CHAR_SET_SIZE; i++) {
-        result[i] = set1[i] | set2[i];
-    }
-}
-
-// Perform the intersection of two sets
-void intersection_sets(const char *set1, const char *set2, char *result) {
-    for (int i = 0; i < CHAR_SET_SIZE; i++) {
-        result[i] = set1[i] & set2[i];
-    }
-}
-
-// Perform the difference of two sets (set1 - set2)
-void difference_sets(const char *set1, const char *set2, char *result) {
-    for (int i = 0; i < CHAR_SET_SIZE; i++) {
-        result[i] = set1[i] & ~set2[i];
-    }
-}
-
-// Complement a set
-void complement_set(const char *set, char *result) {
-    for (int i = 0; i < CHAR_SET_SIZE; i++) {
-        result[i] = set[i] ? 0 : 1;
-    }
-}
-
-// Print a set
-void print_set(const char *set) {
-    for (int i = 0; i < CHAR_SET_SIZE; i++) {
-        if (set[i]) {
-            printf("%c ", 'a' + i);
+// Function to add elements to the set
+void addElements(bool set[], char elements[]) {
+    for (int i = 0; elements[i] != '\0'; i++) {
+        if (elements[i] >= 'a' && elements[i] <= 'z') {
+            set[elements[i] - 'a'] = true;
         }
     }
-    printf("\n");
+}
+
+// Function to display the set
+void displaySet(bool set[]) {
+    printf("{ ");
+    for (int i = 0; i < SIZE; i++) {
+        if (set[i]) {
+            printf("%c ", i + 'a');
+        }
+    }
+    printf("}\n");
+}
+
+// Function to compute union
+void unionSet(bool set1[], bool set2[], bool result[]) {
+    for (int i = 0; i < SIZE; i++) {
+        result[i] = set1[i] || set2[i];
+    }
+}
+
+// Function to compute intersection
+void intersectionSet(bool set1[], bool set2[], bool result[]) {
+    for (int i = 0; i < SIZE; i++) {
+        result[i] = set1[i] && set2[i];
+    }
+}
+
+// Function to compute difference (set1 - set2)
+void differenceSet(bool set1[], bool set2[], bool result[]) {
+    for (int i = 0; i < SIZE; i++) {
+        result[i] = set1[i] && !set2[i];
+    }
+}
+
+// Function to compute symmetric difference
+void symmetricDifferenceSet(bool set1[], bool set2[], bool result[]) {
+    for (int i = 0; i < SIZE; i++) {
+        result[i] = (set1[i] || set2[i]) && !(set1[i] && set2[i]);
+    }
 }
 
 int main() {
-    char set1[CHAR_SET_SIZE] = {0};
-    char set2[CHAR_SET_SIZE] = {0};
-    char result[CHAR_SET_SIZE] = {0};
-    char input[CHAR_SET_SIZE + 1];
+    char set1Input[SIZE], set2Input[SIZE];
+    bool set1[SIZE], set2[SIZE];
+    bool result[SIZE];
 
-    printf("Enter set1: ");
-    scanf("%s", input);
+    // Initialize sets
+    initializeSet(set1);
+    initializeSet(set2);
+    initializeSet(result);
 
-    for (int i = 0; i < strlen(input); i++) {
-        set_bit(set1, input[i]);
-    }
+    // Input sets
+    printf("Enter elements of set 1 (lowercase letters only): ");
+    scanf("%s", set1Input);
+    printf("Enter elements of set 2 (lowercase letters only): ");
+    scanf("%s", set2Input);
 
-    printf("Enter set2: ");
-    scanf("%s", input);
+    // Add elements to sets
+    addElements(set1, set1Input);
+    addElements(set2, set2Input);
 
-    for (int i = 0; i < strlen(input); i++) {
-        set_bit(set2, input[i]);
-    }
+    // Perform operations
+    printf("\nUnion: ");
+    unionSet(set1, set2, result);
+    displaySet(result);
 
-    printf("Set1: ");
-    print_set(set1);
-
-    printf("Set2: ");
-    print_set(set2);
-
-    union_sets(set1, set2, result);
-    printf("Union: ");
-    print_set(result);
-
-    intersection_sets(set1, set2, result);
     printf("Intersection: ");
-    print_set(result);
+    intersectionSet(set1, set2, result);
+    displaySet(result);
 
-    difference_sets(set1, set2, result);
-    printf("Difference (Set1 - Set2): ");
-    print_set(result);
+    printf("Difference (set1 - set2): ");
+    differenceSet(set1, set2, result);
+    displaySet(result);
 
-    complement_set(set1, result);
-    printf("Complement of Set1: ");
-    print_set(result);
+    printf("Symmetric Difference: ");
+    symmetricDifferenceSet(set1, set2, result);
+    displaySet(result);
 
     return 0;
 }
