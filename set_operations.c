@@ -51,8 +51,6 @@ int main() {
     int universalSet[UNIVERSAL_SIZE] = {1};
     int set1[UNIVERSAL_SIZE] = {0}, set2[UNIVERSAL_SIZE] = {0};
     int result[UNIVERSAL_SIZE] = {0};
-
-    // Initialize the universal set to include all elements (a to z)
     for (int i = 0; i < UNIVERSAL_SIZE; i++) {
         universalSet[i] = 1;
     }
@@ -70,27 +68,22 @@ int main() {
     printf("Set 2: ");
     displaySet(set2);
 
-    // Union
     unionSet(set1, set2, result);
     printf("\nUnion of Set 1 and Set 2: ");
     displaySet(result);
 
-    // Intersection
     intersectionSet(set1, set2, result);
     printf("Intersection of Set 1 and Set 2: ");
     displaySet(result);
 
-    // Difference
     differenceSet(set1, set2, result);
     printf("Difference of Set 1 and Set 2 (Set1 - Set2): ");
     displaySet(result);
 
-    // Complement of Set 1
     complementSet(set1, universalSet, result);
     printf("Complement of Set 1: ");
     displaySet(result);
 
-    // Complement of Set 2
     complementSet(set2, universalSet, result);
     printf("Complement of Set 2: ");
     displaySet(result);
