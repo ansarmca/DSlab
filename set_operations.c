@@ -1,29 +1,21 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 
-#define SIZE 26 // Size of the universal set (alphabet)
+#define UNIVERSAL_SIZE 26
 
-// Function to initialize a set with 0 (false)
-void initializeSet(bool set[]) {
-    for (int i = 0; i < SIZE; i++) {
-        set[i] = false;
+void inputSet(int set[]) {
+    char input[100];
+    printf("Enter elements of the set (without spaces, lowercase a-z): ");
+    scanf("%s", input);
+
+    for (int i = 0; i < strlen(input); i++) {
+        set[input[i] - 'a'] = 1;
     }
 }
 
-// Function to add elements to the set
-void addElements(bool set[], char elements[]) {
-    for (int i = 0; elements[i] != '\0'; i++) {
-        if (elements[i] >= 'a' && elements[i] <= 'z') {
-            set[elements[i] - 'a'] = true;
-        }
-    }
-}
-
-// Function to display the set
-void displaySet(bool set[]) {
+void displaySet(int set[]) {
     printf("{ ");
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < UNIVERSAL_SIZE; i++) {
         if (set[i]) {
             printf("%c ", i + 'a');
         }
@@ -31,69 +23,62 @@ void displaySet(bool set[]) {
     printf("}\n");
 }
 
-// Function to compute union
-void unionSet(bool set1[], bool set2[], bool result[]) {
-    for (int i = 0; i < SIZE; i++) {
-        result[i] = set1[i] || set2[i];
+void unionSet(int set1[], int set2[], int result[]) {
+    for (int i = 0; i < UNIVERSAL_SIZE; i++) {
+        result[i] = set1[i] | set2[i];
     }
 }
 
-// Function to compute intersection
-void intersectionSet(bool set1[], bool set2[], bool result[]) {
-    for (int i = 0; i < SIZE; i++) {
-        result[i] = set1[i] && set2[i];
+void intersectionSet(int set1[], int set2[], int result[]) {
+    for (int i = 0; i < UNIVERSAL_SIZE; i++) {
+        result[i] = set1[i] & set2[i];
     }
 }
 
-// Function to compute difference (set1 - set2)
-void differenceSet(bool set1[], bool set2[], bool result[]) {
-    for (int i = 0; i < SIZE; i++) {
-        result[i] = set1[i] && !set2[i];
+void differenceSet(int set1[], int set2[], int result[]) {
+    for (int i = 0; i < UNIVERSAL_SIZE; i++) {
+        result[i] = set1[i] & !set2[i];
     }
 }
 
-// Function to compute symmetric difference
-void symmetricDifferenceSet(bool set1[], bool set2[], bool result[]) {
-    for (int i = 0; i < SIZE; i++) {
-        result[i] = (set1[i] || set2[i]) && !(set1[i] && set2[i]);
+void symmetricDifferenceSet(int set1[], int set2[], int result[]) {
+    for (int i = 0; i < UNIVERSAL_SIZE; i++) {
+        result[i] = set1[i] ^ set2[i];
     }
 }
 
 int main() {
-    char set1Input[SIZE], set2Input[SIZE];
-    bool set1[SIZE], set2[SIZE];
-    bool result[SIZE];
+    int universalSet[UNIVERSAL_SIZE] = {1};
+    int set1[UNIVERSAL_SIZE] = {0}, set2[UNIVERSAL_SIZE] = {0};
+    int result[UNIVERSAL_SIZE] = {0};
 
-    // Initialize sets
-    initializeSet(set1);
-    initializeSet(set2);
-    initializeSet(result);
+    printf("Universal set: { a b c d e f g h i j k l m n o p q r s t u v w x y z }\n");
 
-    // Input sets
-    printf("Enter elements of set 1 (lowercase letters only): ");
-    scanf("%s", set1Input);
-    printf("Enter elements of set 2 (lowercase letters only): ");
-    scanf("%s", set2Input);
+    printf("Input Set 1:\n");
+    inputSet(set1);
 
-    // Add elements to sets
-    addElements(set1, set1Input);
-    addElements(set2, set2Input);
+    printf("Input Set 2:\n");
+    inputSet(set2);
 
-    // Perform operations
-    printf("\nUnion: ");
+    printf("\nSet 1: ");
+    displaySet(set1);
+    printf("Set 2: ");
+    displaySet(set2);
+
     unionSet(set1, set2, result);
+    printf("\nUnion of Set 1 and Set 2: ");
     displaySet(result);
 
-    printf("Intersection: ");
     intersectionSet(set1, set2, result);
+    printf("Intersection of Set 1 and Set 2: ");
     displaySet(result);
 
-    printf("Difference (set1 - set2): ");
     differenceSet(set1, set2, result);
+    printf("Difference of Set 1 and Set 2 (Set1 - Set2): ");
     displaySet(result);
 
-    printf("Symmetric Difference: ");
     symmetricDifferenceSet(set1, set2, result);
+    printf("Symmetric Difference of Set 1 and Set 2: ");
     displaySet(result);
 
     return 0;
