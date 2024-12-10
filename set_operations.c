@@ -3,38 +3,42 @@
 
 #define CHAR_SET_SIZE 26
 
+// Set the bit corresponding to the character
 void set_bit(char *bit_vector, char c) {
-    bit_vector[c - 'a'] = 1;
-}
-
-// Using pointers to modify the input sets directly
-void union_sets(char *set1, char *set2) {
-    for (int i = 0; i < CHAR_SET_SIZE; i++) {
-        set1[i] |= set2[i];
+    if (c >= 'a' && c <= 'z') {
+        bit_vector[c - 'a'] = 1;
     }
 }
 
-// Using pointers to modify the input sets directly
-void intersection_sets(char *set1, char *set2) {
+// Perform the union of two sets
+void union_sets(const char *set1, const char *set2, char *result) {
     for (int i = 0; i < CHAR_SET_SIZE; i++) {
-        set1[i] &= set2[i];
+        result[i] = set1[i] | set2[i];
     }
 }
 
-// Using pointers to modify the input sets directly
-void difference_sets(char *set1, char *set2) {
+// Perform the intersection of two sets
+void intersection_sets(const char *set1, const char *set2, char *result) {
     for (int i = 0; i < CHAR_SET_SIZE; i++) {
-        set1[i] &= ~set2[i];
+        result[i] = set1[i] & set2[i];
     }
 }
 
-// Using pointers to modify the input sets directly
-void complement_set(char *set) {
+// Perform the difference of two sets (set1 - set2)
+void difference_sets(const char *set1, const char *set2, char *result) {
     for (int i = 0; i < CHAR_SET_SIZE; i++) {
-        set[i] = ~set[i];
+        result[i] = set1[i] & ~set2[i];
     }
 }
 
+// Complement a set
+void complement_set(const char *set, char *result) {
+    for (int i = 0; i < CHAR_SET_SIZE; i++) {
+        result[i] = set[i] ? 0 : 1;
+    }
+}
+
+// Print a set
 void print_set(const char *set) {
     for (int i = 0; i < CHAR_SET_SIZE; i++) {
         if (set[i]) {
@@ -47,6 +51,7 @@ void print_set(const char *set) {
 int main() {
     char set1[CHAR_SET_SIZE] = {0};
     char set2[CHAR_SET_SIZE] = {0};
+    char result[CHAR_SET_SIZE] = {0};
     char input[CHAR_SET_SIZE + 1];
 
     printf("Enter set1: ");
@@ -69,32 +74,21 @@ int main() {
     printf("Set2: ");
     print_set(set2);
 
-    // Modified to directly modify the input sets
-    union_sets(set1, set2);
+    union_sets(set1, set2, result);
     printf("Union: ");
-    print_set(set1);
+    print_set(result);
 
-    // Reset set1 to original state
-    for (int i = 0; i < CHAR_SET_SIZE; i++) {
-        set1[i] = set2[i]; // Copy set2 to set1
-    }
-
-    intersection_sets(set1, set2);
+    intersection_sets(set1, set2, result);
     printf("Intersection: ");
-    print_set(set1);
+    print_set(result);
 
-    // Reset set1 to original state
-    for (int i = 0; i < CHAR_SET_SIZE; i++) {
-        set1[i] = set2[i]; // Copy set2 to set1
-    }
-
-    difference_sets(set1, set2);
+    difference_sets(set1, set2, result);
     printf("Difference (Set1 - Set2): ");
-    print_set(set1);
+    print_set(result);
 
-    complement_set(set1);
+    complement_set(set1, result);
     printf("Complement of Set1: ");
-    print_set(set1);
+    print_set(result);
 
     return 0;
 }
