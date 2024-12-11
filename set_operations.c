@@ -3,7 +3,7 @@
 
 #define UNIVERSAL_SIZE 26
 
-// Convert a bit vector to a set representation and display it
+// Display the set as characters
 void displaySetFromBitVector(int set) {
     printf("{ ");
     for (int i = 0; i < UNIVERSAL_SIZE; i++) {
@@ -12,6 +12,14 @@ void displaySetFromBitVector(int set) {
         }
     }
     printf("}\n");
+}
+
+// Display the bit vector (0s and 1s)
+void displayBitVector(int set) {
+    for (int i = UNIVERSAL_SIZE - 1; i >= 0; i--) {
+        printf("%d", (set >> i) & 1);
+    }
+    printf("\n");
 }
 
 // Input elements and set the corresponding bits in the bit vector
@@ -59,28 +67,43 @@ int main() {
 
     printf("\nSet 1: ");
     displaySetFromBitVector(set1);
-    printf("Set 2: ");
+    printf("Bit Vector of Set 1: ");
+    displayBitVector(set1);
+
+    printf("\nSet 2: ");
     displaySetFromBitVector(set2);
+    printf("Bit Vector of Set 2: ");
+    displayBitVector(set2);
 
     result = unionSetBitVector(set1, set2);
     printf("\nUnion of Set 1 and Set 2: ");
     displaySetFromBitVector(result);
+    printf("Bit Vector of Union: ");
+    displayBitVector(result);
 
     result = intersectionSetBitVector(set1, set2);
-    printf("Intersection of Set 1 and Set 2: ");
+    printf("\nIntersection of Set 1 and Set 2: ");
     displaySetFromBitVector(result);
+    printf("Bit Vector of Intersection: ");
+    displayBitVector(result);
 
     result = differenceSetBitVector(set1, set2);
-    printf("Difference of Set 1 and Set 2 (Set1 - Set2): ");
+    printf("\nDifference of Set 1 and Set 2 (Set1 - Set2): ");
     displaySetFromBitVector(result);
+    printf("Bit Vector of Difference: ");
+    displayBitVector(result);
 
     result = complementSetBitVector(set1, universalSet);
-    printf("Complement of Set 1: ");
+    printf("\nComplement of Set 1: ");
     displaySetFromBitVector(result);
+    printf("Bit Vector of Complement: ");
+    displayBitVector(result);
 
     result = complementSetBitVector(set2, universalSet);
-    printf("Complement of Set 2: ");
+    printf("\nComplement of Set 2: ");
     displaySetFromBitVector(result);
+    printf("Bit Vector of Complement: ");
+    displayBitVector(result);
 
     return 0;
 }
