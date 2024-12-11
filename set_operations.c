@@ -4,7 +4,7 @@
 #define UNIVERSAL_SIZE 26
 
 // Convert a bit vector to a set representation and display it
-void displaySetFromBitVector(unsigned int set) {
+void displaySetFromBitVector(int set) {
     printf("{ ");
     for (int i = 0; i < UNIVERSAL_SIZE; i++) {
         if (set & (1 << i)) {
@@ -15,8 +15,8 @@ void displaySetFromBitVector(unsigned int set) {
 }
 
 // Input elements and set the corresponding bits in the bit vector
-unsigned int inputSetAsBitVector() {
-    unsigned int set = 0;
+int inputSetAsBitVector() {
+    int set = 0;
     char input[100];
     printf("Enter elements of the set (without spaces, lowercase a-z): ");
     scanf("%s", input);
@@ -29,25 +29,25 @@ unsigned int inputSetAsBitVector() {
 }
 
 // Bitwise operations for union, intersection, and difference
-unsigned int unionSetBitVector(unsigned int set1, unsigned int set2) {
+int unionSetBitVector(int set1, int set2) {
     return set1 | set2;
 }
 
-unsigned int intersectionSetBitVector(unsigned int set1, unsigned int set2) {
+int intersectionSetBitVector(int set1, int set2) {
     return set1 & set2;
 }
 
-unsigned int differenceSetBitVector(unsigned int set1, unsigned int set2) {
+int differenceSetBitVector(int set1, int set2) {
     return set1 & ~set2;
 }
 
-unsigned int complementSetBitVector(unsigned int set, unsigned int universalSet) {
+int complementSetBitVector(int set, int universalSet) {
     return ~set & universalSet;
 }
 
 int main() {
-    unsigned int universalSet = (1 << UNIVERSAL_SIZE) - 1; // All 26 bits set
-    unsigned int set1 = 0, set2 = 0, result = 0;
+    int universalSet = (1 << UNIVERSAL_SIZE) - 1; // All 26 bits set
+    int set1 = 0, set2 = 0, result = 0;
 
     printf("Universal set: { a b c d e f g h i j k l m n o p q r s t u v w x y z }\n");
 
