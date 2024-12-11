@@ -1,109 +1,139 @@
 #include <stdio.h>
-#include <string.h>
+#include <ctype.h>
 
-#define UNIVERSAL_SIZE 26
-
-// Display the set as characters
-void displaySetFromBitVector(int set) {
-    printf("{ ");
-    for (int i = 0; i < UNIVERSAL_SIZE; i++) {
-        if (set & (1 << i)) {
-            printf("%c ", i + 'a');
+void bitVector(char set[], int bit_vector[], char U[])
+{
+    for (int i = 0; i < 26; i++)
+    {
+        bit_vector[i] = 0;
+    }
+    for (int i = 0; set[i] != '\0'; i++)
+    {
+        for (int j = 0; j < 26; j++)
+        {
+            if (set[i] == U[j])
+            {
+                bit_vector[j] = 1;
+                break;
+            }
         }
     }
-    printf("}\n");
 }
 
-// Display the bit vector (0s and 1s)
-void displayBitVector(int set) {
-    for (int i = UNIVERSAL_SIZE - 1; i >= 0; i--) {
-        printf("%d", (set >> i) & 1);
+void printBitVector(int bit_vector[])
+{
+    for (int i = 0; i < 26; i++)
+    {
+        printf("%d", bit_vector[i]);
     }
     printf("\n");
 }
 
-// Input elements and set the corresponding bits in the bit vector
-int inputSetAsBitVector() {
-    int set = 0;
-    char input[100];
-    printf("Enter elements of the set (without spaces, lowercase a-z): ");
-    scanf("%s", input);
+void union_operation(int set1_bit[], int set2_bit[], int result[])
+{
+    for (int i = 0; i < 26; i++)
+        result[i] = set1_bit[i] | set2_bit[i];
+}
 
-    for (int i = 0; i < strlen(input); i++) {
-        set |= (1 << (input[i] - 'a'));
+void intersection(int set1_bit[], int set2_bit[], int result[])
+{
+    for (int i = 0; i < 26; i++)
+    {
+        result[i] = set1_bit[i] & set2_bit[i];
+    }
+}
+
+void complementOperation(int set_bit[], int result[])
+{
+    for (int i = 0; i < 26; i++)
+    {
+        result[i] = (set_bit[i] == 0) ? 1 : 0;
+    }
+}
+
+void difference(int set1_bit[], int set2_bit[], int result[])
+{
+    int complement[26];
+    complementOperation(set2_bit, complement);
+    for (int i = 0; i < 26; i++)
+        result[i] = set1_bit[i] & set2_bit[i];
+}
+
+int main()
+{
+    char Universal_set[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    char set1[26], set2[26];
+    int set1_bit[26], set2_bit[26], result[26];
+    int set1_size, set2_size;
+
+    printf("Enter size of Set 1: ");
+    scanf("%d", &set1_size);
+    printf("\nEnter elements for Set 1: ");
+    for (int i = 0; i < set1_size; i++)
+    {
+        scanf(" %c", &set1[i]);
+        set1[i] = tolower(set1[i]);
+    }
+    set1[set1_size] = '\0';
+
+    printf("\nEnter size of Set 2: ");
+    scanf("%d", &set2_size);
+    printf("\nEnter elements for Set 2: ");
+    for (int i = 0; i < set2_size; i++)
+    {
+        scanf(" %c", &set2[i]);
+        set2[i] = tolower(set2[i]);
+    }
+    set2[set2_size] = '\0';
+
+    bitVector(set1, set1_bit, Universal_set);
+    printf("\nBit Vector Representation of Set 1: \n");
+    printBitVector(set1_bit);
+
+    bitVector(set2, set2_bit, Universal_set);
+    printf("\nBit Vector Representation of Set 2: \n");
+    printBitVector(set2_bit);
+
+    int choice;
+    while (choice != 5)
+    {
+        printf("\n 1.Set Union\n 2.Intersection\n 3.Complement\n 4.Set Difference\n 5.Exit\n");
+        printf("Enter Your Choice Here: ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            union_operation(set1_bit, set2_bit, result);
+            printf("\nUnion of Set 1 and Set 2 is :\n");
+            printBitVector(result);
+            break;
+        case 2:
+            intersection(set1_bit, set2_bit, result);
+            printf("\nIntersection of Set 1 and Set 2 is :\n");
+            printBitVector(result);
+            break;
+        case 3:
+            complementOperation(set1_bit, result);
+            printf("\nComplement of Set 1 is :\n");
+            printBitVector(result);
+            complementOperation(set2_bit, result);
+            printf("\nComplement of Set 2 is :\n");
+            printBitVector(result);
+            break;
+        case 4:
+            difference(set1_bit, set2_bit, result);
+            printf("\nSet Difference S1 - S2 is :\n");
+    	    printBitVector(result);
+    	    difference(set2_bit, set1_bit, result);
+    	    printf("\nSet Difference S2 - S1 is :\n");
+            printBitVector(result);
+            break;
+        case 5:
+            return 0;
+        default:
+            printf("\nInvalid Choice, Try Again\n");
+        }
     }
 
-    return set;
-}
-
-// Bitwise operations for union, intersection, and difference
-int unionSetBitVector(int set1, int set2) {
-    return set1 | set2;
-}
-
-int intersectionSetBitVector(int set1, int set2) {
-    return set1 & set2;
-}
-
-int differenceSetBitVector(int set1, int set2) {
-    return set1 & ~set2;
-}
-
-int complementSetBitVector(int set, int universalSet) {
-    return ~set & universalSet;
-}
-
-int main() {
-    int universalSet = (1 << UNIVERSAL_SIZE) - 1; // All 26 bits set
-    int set1 = 0, set2 = 0, result = 0;
-
-    printf("Universal set: { a b c d e f g h i j k l m n o p q r s t u v w x y z }\n");
-
-    printf("Input Set 1:\n");
-    set1 = inputSetAsBitVector();
-
-    printf("Input Set 2:\n");
-    set2 = inputSetAsBitVector();
-
-    printf("\nSet 1: ");
-    displaySetFromBitVector(set1);
-    printf("Bit Vector of Set 1: ");
-    displayBitVector(set1);
-
-    printf("\nSet 2: ");
-    displaySetFromBitVector(set2);
-    printf("Bit Vector of Set 2: ");
-    displayBitVector(set2);
-
-    result = unionSetBitVector(set1, set2);
-    printf("\nUnion of Set 1 and Set 2: ");
-    displaySetFromBitVector(result);
-    printf("Bit Vector of Union: ");
-    displayBitVector(result);
-
-    result = intersectionSetBitVector(set1, set2);
-    printf("\nIntersection of Set 1 and Set 2: ");
-    displaySetFromBitVector(result);
-    printf("Bit Vector of Intersection: ");
-    displayBitVector(result);
-
-    result = differenceSetBitVector(set1, set2);
-    printf("\nDifference of Set 1 and Set 2 (Set1 - Set2): ");
-    displaySetFromBitVector(result);
-    printf("Bit Vector of Difference: ");
-    displayBitVector(result);
-
-    result = complementSetBitVector(set1, universalSet);
-    printf("\nComplement of Set 1: ");
-    displaySetFromBitVector(result);
-    printf("Bit Vector of Complement: ");
-    displayBitVector(result);
-
-    result = complementSetBitVector(set2, universalSet);
-    printf("\nComplement of Set 2: ");
-    displaySetFromBitVector(result);
-    printf("Bit Vector of Complement: ");
-    displayBitVector(result);
-
-    return 0;
+    return (0);
 }
