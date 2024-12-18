@@ -3,31 +3,25 @@
 
 #define MAX 100
 
-// Define the structure for each disjoint set element
-typedef struct {
-    int parent;
-    int rank;
-} DisjointSet;
+int parent[MAX];  // Parent array
+int rank[MAX];    // Rank array
 
-// Declare the disjoint set array
-DisjointSet sets[MAX];
-
-// Function to initialize a set for an element (MakeSet)
+// MakeSet function
 void makeSet(int x) {
-    sets[x].parent = x;  // Parent points to itself
-    sets[x].rank = 0;    // Initial rank is 0
+    parent[x] = x;  // Parent points to itself
+    rank[x] = 0;    // Initial rank is 0
     printf("MakeSet: Created set for element %d\n", x);
 }
 
-// Function to find the representative of the set containing x (FindSet)
+// FindSet function with path compression
 int findSet(int x) {
-    if (sets[x].parent != x) {
-        sets[x].parent = findSet(sets[x].parent);  // Path compression
+    if (parent[x] != x) {
+        parent[x] = findSet(parent[x]);  // Path compression
     }
-    return sets[x].parent;
+    return parent[x];
 }
 
-// Function to perform the union of two sets (Union)
+// Union function
 void unionSets(int x, int y) {
     int rootX = findSet(x);
     int rootY = findSet(y);
@@ -37,20 +31,20 @@ void unionSets(int x, int y) {
         return;
     }
 
-    // Attach smaller rank tree under larger rank tree
-    if (sets[rootX].rank < sets[rootY].rank) {
-        sets[rootX].parent = rootY;
-    } else if (sets[rootX].rank > sets[rootY].rank) {
-        sets[rootY].parent = rootX;
+    // Union by rank
+    if (rank[rootX] < rank[rootY]) {
+        parent[rootX] = rootY;
+    } else if (rank[rootX] > rank[rootY]) {
+        parent[rootY] = rootX;
     } else {
-        sets[rootY].parent = rootX;
-        sets[rootX].rank++;
+        parent[rootY] = rootX;
+        rank[rootX]++;
     }
 
     printf("Union: Merged sets containing %d and %d.\n", x, y);
 }
 
-// Main function with menu
+// Main function
 int main() {
     int choice, x, y, n;
 
@@ -114,4 +108,3 @@ int main() {
 
     return 0;
 }
-
