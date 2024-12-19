@@ -5,6 +5,7 @@ struct node {
     struct node *rep;
     struct node *next;
     int data;
+    int rank; // Adding rank field
 };
 
 struct node *heads[50], *tails[50];
@@ -15,6 +16,7 @@ void makeSet(int x) {
     new->rep = new;
     new->next = NULL;
     new->data = x;
+    new->rank = 0; // Initialize rank to 0
     heads[countRoot] = new;
     tails[countRoot++] = new;
 }
@@ -43,17 +45,21 @@ void unionSets(int a, int b) {
     }
 
     if (rep1 != rep2) {
-        if (rep1->next == NULL) {
-            rep1->next = rep2;
-            rep2->rep = rep1;
-        } else if (rep2->next == NULL) {
-            rep2->next = rep1;
+        if (rep1->rank < rep2->rank) {
             rep1->rep = rep2;
-        } else {
-            rep2->next = rep1->next;
-            rep1->next = rep2;
+        } else if (rep1->rank > rep2->rank) {
             rep2->rep = rep1;
+        } else {
+            rep2->rep = rep1;
+            rep1->rank++;
         }
+
+        // Merging the sets
+        struct node *tmp = rep2;
+        while (tmp->next != NULL) {
+            tmp = tmp->next;
+        }
+        tmp->next = rep1;
     }
 }
 
