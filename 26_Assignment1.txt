@@ -142,27 +142,28 @@ int top = -1, inp_array[SIZE];
 void push() {
     int x;
     if (top == SIZE - 1) {
-        printf("\n Stack Overflow!!");
+        printf("\nStack Overflow!!\n");
     } else {
         printf("\nEnter the element to be added onto the stack: ");
         scanf("%d", &x);
         top = top + 1;
         inp_array[top] = x;
+        printf("%d has been pushed onto the stack.\n", x);
     }
 }
 
 void pop() {
     if (top == -1) {
-        printf("\n Stack Underflow!!");
+        printf("\nStack Underflow!!\n");
     } else {
-        printf("\nPopped element: %d", inp_array[top]);
+        printf("\nPopped element: %d\n", inp_array[top]);
         top = top - 1;
     }
 }
 
 void traversal() {
     if (top == -1) {
-        printf("\nUnderflow!!");
+        printf("\nStack is empty!!\n");
     } else {
         printf("\nElements present in the stack: \n");
         for (int i = top; i >= 0; --i) {
@@ -175,8 +176,8 @@ int main() {
     int choice;
     while (1) {
         printf("\nPerform operations on the stack:");
-        printf("\n1.Push the element\n2.Pop the element\n3.Traversal\n4.End");
-        printf("\n\nEnter the choice: ");
+        printf("\n1. Push the element\n2. Pop the element\n3. Traversal\n4. End");
+        printf("\n\nEnter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
@@ -190,9 +191,10 @@ int main() {
                 traversal();
                 break;
             case 4:
+                printf("\nExiting program...\n");
                 exit(0);
             default:
-                printf("\nInvalid choice!!");
+                printf("\nInvalid choice!!\n");
         }
     }
 }
@@ -209,10 +211,12 @@ Program Code:
 int queue[SIZE];
 int front = -1, rear = -1;
 
+// Check if the queue is full
 int isFull() {
     return (rear == SIZE - 1);
 }
 
+// Check if the queue is empty
 int isEmpty() {
     return (front == -1 || front > rear);
 }
@@ -240,7 +244,7 @@ int dequeue() {
         int value = queue[front];
         front++;
         if (front > rear) { 
-            front = rear = -1;
+            front = rear = -1; // Reset queue if it becomes empty
         }
         printf("%d dequeued from queue.\n", value);
         return value;
@@ -260,9 +264,9 @@ void traverse() {
     }
 }
 
-
 int main() {
     int choice, value;
+
     while (1) {
         printf("\nQueue Operations:\n");
         printf("1. Enqueue\n");
