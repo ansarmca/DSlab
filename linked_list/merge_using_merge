@@ -1,0 +1,124 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to insert a node at the end of the list
+void insertNode(struct Node** head, int data) {
+    struct Node* newNode = createNode(data);
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+    struct Node* temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+// Function to display the linked list
+void displayList(struct Node* head) {
+    while (head != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+
+// Function to sort the linked list
+void sortList(struct Node* head) {
+    if (head == NULL) return;
+    struct Node* i = head;
+    while (i != NULL) {
+        struct Node* j = i->next;
+        while (j != NULL) {
+            if (i->data > j->data) {
+                int temp = i->data;
+                i->data = j->data;
+                j->data = temp;
+            }
+            j = j->next;
+        }
+        i = i->next;
+    }
+}
+
+// Function to merge two sorted linked lists
+struct Node* mergeLists(struct Node* list1, struct Node* list2) {
+    struct Node dummy;
+    struct Node* tail = &dummy;
+    dummy.next = NULL;
+
+    while (list1 != NULL && list2 != NULL) {
+        if (list1->data <= list2->data) {
+            tail->next = list1;
+            list1 = list1->next;
+        } else {
+            tail->next = list2;
+            list2 = list2->next;
+        }
+        tail = tail->next;
+    }
+    tail->next = (list1 != NULL) ? list1 : list2;
+    return dummy.next;
+}
+
+int main() {
+    struct Node* list1 = NULL;
+    struct Node* list2 = NULL;
+    struct Node* mergedList = NULL;
+    int n, k, i, data;
+
+    // Input for first linked list
+    printf("Enter the number of elements in the first list: ");
+    scanf("%d", &n);
+    printf("Enter the elements of the first list: \n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &data);
+        insertNode(&list1, data);
+    }
+
+    printf("First Unsorted List: \n");
+    displayList(list1);
+
+    sortList(list1);
+    printf("First Sorted List: \n");
+    displayList(list1);
+
+    // Input for second linked list
+    printf("Enter the number of elements in the second list: ");
+    scanf("%d", &k);
+    printf("Enter the elements of the second list: \n");
+    for (i = 0; i < k; i++) {
+        scanf("%d", &data);
+        insertNode(&list2, data);
+    }
+
+    printf("Second Unsorted List: \n");
+    displayList(list2);
+
+    sortList(list2);
+    printf("Second Sorted List: \n");
+    displayList(list2);
+
+    // Merging the two sorted lists
+    mergedList = mergeLists(list1, list2);
+
+    printf("Merged Sorted List: \n");
+    displayList(mergedList);
+
+    return 0;
+}
