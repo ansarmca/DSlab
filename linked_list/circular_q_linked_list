@@ -1,0 +1,109 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define a Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* front = NULL;
+struct Node* rear = NULL;
+
+// Check if the queue is empty
+int isEmpty() {
+    return front == NULL;
+}
+
+// Enqueue operation
+void enqueue(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (!newNode) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    newNode->data = data;
+    newNode->next = NULL;
+
+    if (isEmpty()) {
+        front = rear = newNode;
+        rear->next = front; // Circular link
+    } else {
+        rear->next = newNode;
+        rear = newNode;
+        rear->next = front; // Maintain circular link
+    }
+    printf("Element %d inserted\n", data);
+}
+
+// Dequeue operation
+int dequeue() {
+    if (isEmpty()) {
+        printf("Queue underflow\n");
+        return -1;
+    }
+    int data;
+    if (front == rear) { // Single element
+        data = front->data;
+        free(front);
+        front = rear = NULL;
+    } else {
+        struct Node* temp = front;
+        data = temp->data;
+        front = front->next;
+        rear->next = front; // Maintain circular link
+        free(temp);
+    }
+    return data;
+}
+
+// Traversal operation
+void traversal() {
+    if (isEmpty()) {
+        printf("Queue is empty\n");
+        return;
+    }
+    struct Node* temp = front;
+    printf("Queue elements: ");
+    do {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    } while (temp != front);
+    printf("\n");
+}
+
+int main() {
+    int choice, data;
+
+    while (1) {
+        printf("\nCircular Queue Operations (Linked List):\n");
+        printf("1. Enqueue\n");
+        printf("2. Dequeue\n");
+        printf("3. Traversal Queue\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value to enqueue: ");
+                scanf("%d", &data);
+                enqueue(data);
+                break;
+            case 2:
+                data = dequeue();
+                if (data != -1)
+                    printf("Dequeued element: %d\n", data);
+                break;
+            case 3:
+                traversal();
+                break;
+            case 4:
+                return 0;
+            default:
+                printf("Invalid choice.\n");
+        }
+    }
+
+    return 0;
+}
