@@ -1,22 +1,19 @@
 #include <stdio.h>
 
-int Adjmat[4][4] = {
-    {0, 0, 1, 0},  // Node 1 connected to Node 3
-    {1, 0, 0, 0},  // Node 2 connected to Node 1
-    {0, 0, 0, 1},  // Node 3 connected to Node 4
-    {0, 1, 0, 0}   // Node 4 connected to Node 2
-};
-int visit[4] = {0, 0, 0, 0}; // Array to keep track of visited nodes
-int queue[4];
+#define MAX_NODES 10 // Maximum number of nodes
+int Adjmat[MAX_NODES][MAX_NODES]; // Adjacency matrix
+int visit[MAX_NODES] = {0};       // Array to keep track of visited nodes
+int queue[MAX_NODES];             // Queue for BFS
 int front = -1;
 int rear = -1;
+int n;                            // Number of nodes
 
 int isEmpty() {
     return front == -1;
 }
 
 int isFull() {
-    return rear == 4 - 1;
+    return rear == MAX_NODES - 1;
 }
 
 void enqueue(int element) {
@@ -30,7 +27,6 @@ void enqueue(int element) {
         rear++;
     }
     queue[rear] = element;
-    // printf("%d enqueued to queue\n", element); // Remove this print to clean the output
 }
 
 int dequeue() {
@@ -56,7 +52,7 @@ void bfs(int startNode) {
         int currentNode = dequeue();
         printf("%d ", currentNode + 1); // Printing nodes as 1-based index
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < n; i++) {
             if (Adjmat[currentNode][i] == 1 && visit[i] == 0) {
                 enqueue(i);
                 visit[i] = 1;
@@ -67,6 +63,27 @@ void bfs(int startNode) {
 }
 
 int main() {
-    bfs(0); // Start BFS from node 1 (0-based index)
+    int startNode;
+
+    // Input number of nodes
+    printf("Enter the number of nodes: ");
+    scanf("%d", &n);
+
+    // Input adjacency matrix
+    printf("Enter the adjacency matrix (%dx%d):\n", n, n);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &Adjmat[i][j]);
+        }
+    }
+
+    // Input starting node
+    printf("Enter the starting node (1 to %d): ", n);
+    scanf("%d", &startNode);
+    startNode--; // Convert to 0-based index
+
+    // Perform BFS
+    bfs(startNode);
+
     return 0;
 }
