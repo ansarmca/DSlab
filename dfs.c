@@ -1,22 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int Adjmat[4][4] = {
-    {0, 0, 1, 0},  // Node 1 connected to Node 3
-    {1, 0, 0, 0},  // Node 2 connected to Node 1
-    {0, 0, 0, 1},  // Node 3 connected to Node 4
-    {0, 1, 0, 0}   // Node 4 connected to Node 2
-};
-int visit[4] = {0, 0, 0, 0}; // Array to keep track of visited nodes
-int stack[4];
+int Adjmat[10][10]; // Adjacency matrix, size increased for flexibility
+int visit[10];      // Array to keep track of visited nodes
+int stack[10];
 int top = -1;
+int n; // Number of nodes
 
 int isEmpty() {
     return top == -1;
 }
 
 int isFull() {
-    return top == 4 - 1;
+    return top == n - 1;
 }
 
 void push(int element) {
@@ -47,7 +43,7 @@ void dfs(int startNode) {
             visit[currentNode] = 1;
 
             // Push all adjacent vertices of the current node into the stack
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < n; i++) {
                 if (Adjmat[currentNode][i] == 1 && !visit[i]) {
                     push(i);
                 }
@@ -58,6 +54,28 @@ void dfs(int startNode) {
 }
 
 int main() {
-    dfs(0); // Start DFS from node 1 (0-based index)
+    int startNode;
+
+    printf("Enter the number of nodes: ");
+    scanf("%d", &n);
+
+    // Initialize the visit array
+    for (int i = 0; i < n; i++) {
+        visit[i] = 0;
+    }
+
+    printf("Enter the adjacency matrix (%d x %d):\n", n, n);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &Adjmat[i][j]);
+        }
+    }
+
+    printf("Enter the starting node (1-based index): ");
+    scanf("%d", &startNode);
+
+    // Convert to 0-based index for internal processing
+    dfs(startNode - 1);
+
     return 0;
 }
